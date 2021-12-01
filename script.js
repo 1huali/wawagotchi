@@ -18,7 +18,7 @@ window.onload = function() {
   let pet = document.getElementById('pet');
   let hungerBox = document.getElementById('hungerBox');
 
-// let rain = document.getElementById('rain');
+let weatherVar = ``;
 
   let hungerLevel = 5;
   let coins = 15;
@@ -124,10 +124,11 @@ function changeFit() {
 }
 
 // rain
-setInterval(weatherChanging, 90000);
+setInterval(weatherChanging, 2000);
 
 function weatherChanging() {
-
+weatherVar.src = "Preloads/Images/giphy-rain.png"
+console.log("weather changing");
 }
 
   // eat and hunger
@@ -190,7 +191,7 @@ function moodUpdate() {
   console.log(moodLevel);
   moodText.innerHTML = `MOOD: `;
 
-  console.log(moodUpdate);
+  // console.log(moodUpdate);
   document.getElementById('lilhearts').innerHTML = "";
   for (let i = 0; i < moodLevel; i++) {
     let heart = document.createElement("img");
@@ -265,7 +266,6 @@ function coinsUpdate() {
   if (coins < 1) {
     coins = 1;
   }
-  console.log(coins);
   coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
 }
 
@@ -297,22 +297,22 @@ function displayShower() {
     console.log("back");
     room.src = rooms[currentRoom]
   }
-
+}
 
 // displays bg room
 
 changeBgButton.addEventListener("click", changeBgPicture);
 function changeBgPicture() {
-  // picture might display under the main bg
-  // should we put rooms in an array? to make a loop
+
   if (currentRoom >= rooms.length - 1) {
     currentRoom = 0;
     room.src = rooms[currentRoom]
 
   } else {
     currentRoom = currentRoom + 1;
-
     room.src = rooms[currentRoom]
   }
+  console.log("change button click")
 }
-}} //onload end
+
+} //onload end
