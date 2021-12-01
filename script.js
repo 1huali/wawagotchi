@@ -33,15 +33,13 @@ window.onload = function() {
   let petZone = document.querySelector('#petBox');
   // it is in bigBox, not petBox
   let petZoneRect = petZone.getBoundingClientRect();
-  requestAnimationFrame(makeNewPosition);
+  // requestAnimationFrame(makeNewPosition);
 
   function makeNewPosition() {
     // Get viewport dimensions (remove the dimension of the div)
     let h = petZoneRect.height;
     let w = petZoneRect.width;
 
-    //let nh = Math.floor(Math.random() * h);
-    //  let nw = Math.floor(Math.random() * w);
     let nw = getRandomInt(-5, 5);
     let nh = getRandomInt(-5, 5);
 
@@ -67,24 +65,29 @@ window.onload = function() {
   let washButton = document.getElementById('washButton');
   let meditationButton = document.getElementById('meditateButton');
   let changeBgButton = document.getElementById('newRoom');
+  let changeFitButton= document.getElementById('newKokoButton');
 
   // // preload
   helloSoundtrack = document.getElementById('helloSound');
-  showerSoundtrack = document.getElementById('showerSoundtrack')
+  showerSoundtrack = document.getElementById('showerSoundtrack');
+  ilySoundtrack = document.getElementById('ilySoundtrack');
   pet = document.getElementById('pet');
-  // this is the shower, I wanna change to showerRoom
-  // showerRoom = document.getElementById('petBackground0');
+let fits = [];
+let currentFit =0;
+fits[0]="Preloads/Images/output-onlinegiftools.gif";
+fits[1]="Preloads/Images/1output-onlinegiftools.gif";
+
   room = document.getElementById('room');
   ramenRoom = document.getElementById('dinnerBackground');
-let rooms = [];
-let currentRoom = 0;
-rooms[0]= "Preloads/Images/https-::www.tumbral.com:blog:anime-bedrooms.jpeg";
-rooms [1]="Preloads/Images/https-::wallpapersafari.com:w:XMIvn0.png";
-rooms [2]="Preloads/Images/https-::anime.desktopnexus.com:wallpaper:1519445:.webp"
+  let rooms = [];
+  let currentRoom = 0;
+  rooms[0] = "Preloads/Images/https-::www.tumbral.com:blog:anime-bedrooms.jpeg";
+  rooms[1] = "Preloads/Images/https-::wallpapersafari.com:w:XMIvn0.png";
+  rooms[2] = "Preloads/Images/https-::anime.desktopnexus.com:wallpaper:1519445:.webp"
 
 
   nameBox.innerHTML = "<h2> NAME: Koko </h2>";
-  birthBox.innerHTML = `<h2> DAY: ${dt.toLocaleString()} </h2>`;
+  birthBox.innerHTML = `<h2> DAY AND TIME: ${dt.toLocaleString()} </h2>`;
   signBox.innerHTML = "<h2> SIGN: Earth </h2>";
   coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
   moodText.innerHTML = `MOOD: `;
@@ -106,8 +109,24 @@ rooms [2]="Preloads/Images/https-::anime.desktopnexus.com:wallpaper:1519445:.web
 
   // functions
 
+// change fit
+
+changeFitButton.addEventListener("click", changeFit);
+function changeFit() {
+  if (currentFit >= fits.length - 1) {
+    currentFit = 0;
+    pet.src = fits[currentFit]
+
+  } else {
+    currentFit = currentFit + 1;
+
+    fits.src = fits[currentFit]
+  }
+}
+
+
   // eat and hunger
-  setInterval(hungerUpdate, 5000);
+  setInterval(hungerUpdate, 20000);
 
   function hungerUpdate() {
     hungerLevel -= 1;
@@ -127,158 +146,168 @@ rooms [2]="Preloads/Images/https-::anime.desktopnexus.com:wallpaper:1519445:.web
   eatButton.addEventListener("click", eatPressed);
 
   function eatPressed() {
-    hungerLevel += 4;
-    coins -= 5;
-    if (hungerLevel >= 7) {
-      hungerLevel = 7;
-    }
-    ramenRoom.src = "Preloads/Images/Preloads/Images/https-::aminoapps.com:c:anime:page:blog:anime-food:kvtG_uaQQMQW6mjwM1vbzDJZemX01.jpeg"
-    coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
-    hungerText.innerHTML = `BELLY:`;
-    console.log(event);
-    console.log(this);
-
-    document.getElementById('hungerLilhearts').innerHTML = "";
-
-    for (let i = 0; i < hungerLevel; i++) {
-
-      let hungerHeart = document.createElement("img");
-      hungerHeart.src = "Preloads/Images/https-::www.pngitem.com:middle:hmibbwx_pink-pixel-heart-png-transparent-png:.png";
-      document.getElementById('hungerLilhearts').appendChild(hungerHeart);
-    }
-  }
-
-  // play and mood
-  setInterval(moodUpdate, 5000);
-
-  function moodUpdate() {
-    moodLevel -= 1;
-    if (moodLevel <= 1) {
-      moodLevel = 1;
-    }
-
-    console.log(moodLevel);
-    moodText.innerHTML = `MOOD: `;
-
-    console.log(moodUpdate);
-    document.getElementById('lilhearts').innerHTML = "";
-    for (let i = 0; i < moodLevel; i++) {
-      let heart = document.createElement("img");
-      heart.src = "Preloads/Images/https-::www.pngitem.com:middle:hmibbwx_pink-pixel-heart-png-transparent-png:.png";
-      document.getElementById('lilhearts').appendChild(heart);
-    }
-  }
-
-  playButt.addEventListener("click", playPressed);
-
-  function playPressed() {
-    moodLevel += 2;
-    coins -= 5;
-    if (moodLevel >= 7) {
-      moodLevel = 7;
-    }
-    coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
-    moodText.innerHTML = `MOOD:`;
-    console.log(event);
-    console.log(this);
-    ramenRoom.src = "Preloads/Images/https-::www.pinterest.ca:pin:809522101760396658:.jpeg"
-
-
-    document.getElementById('lilhearts').innerHTML = "";
-
-    for (let i = 0; i < moodLevel; i++) {
-
-      let heart = document.createElement("img");
-      heart.src = "Preloads/Images/https-::www.pngitem.com:middle:hmibbwx_pink-pixel-heart-png-transparent-png:.png";
-      document.getElementById('lilhearts').appendChild(heart);
-    }
-
-  }
-  // meditative kitty
-  meditationButton.addEventListener("click", meditationPressed);
-
-  function meditationPressed() {
-    moodLevel += 3;
-    moodText.innerHTML = `MOOD:`;
-    console.log(event);
-    console.log(this);
-
-    document.getElementById('lilhearts').innerHTML = "";
-
-    for (let i = 0; i < moodLevel; i++) {
-
-      let heart = document.createElement("img");
-      heart.src = "Preloads/Images/https-::www.pngitem.com:middle:hmibbwx_pink-pixel-heart-png-transparent-png:.png";
-      document.getElementById('lilhearts').appendChild(heart);
-    }
-
-  }
-
-
-  setInterval(coinsUpdate, 5000);
-
-  function coinsUpdate() {
-    coins += 1;
-    if (coins < 1) {
-      coins = 1;
-    }
-    console.log(coins);
-    coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
-  }
-
-
-
-  // plays hello
-  helloButton.addEventListener("click", playHelloSound);
-
-  function playHelloSound() {
-    helloSoundtrack.play();
-    console.log(event);
-    console.log(this);
-  }
-
-  // displays shower room at shower
-
-  // doesnt come back to normal after 2 seconds
-  // let showerTimer = setTimeout(displayShower, 5000);
-  washButton.addEventListener("click", displayShower);
-
-  function displayShower() {
-    setTimeout(function(){
-      showerSoundtrack.play();
-      room.src = "Preloads/Images/https-::www.pinterest.ca:pin:809522101760396658:.jpeg"
-      console.log("shower on");
-      setTimeout(returnToBackground,2000)
+    setTimeout(function() {
+      room.src = "Preloads/Images/https-::imgur.com:gallery:OI5Ev4n.gif"
+      setTimeout(returnToBackground, 3000)
     })
 
+  function returnToBackground() {
+    room.src = rooms[currentRoom]
   }
-  function returnToBackground(){
-    console.log("back");
-  room.src = rooms[currentRoom]
+  hungerLevel += 4;
+  coins -= 5;
+  if (hungerLevel >= 7) {
+    hungerLevel = 7;
+  }
+  coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
+  hungerText.innerHTML = `BELLY:`;
+  console.log(event);
+  console.log(this);
+
+  document.getElementById('hungerLilhearts').innerHTML = "";
+
+  for (let i = 0; i < hungerLevel; i++) {
+
+    let hungerHeart = document.createElement("img");
+    hungerHeart.src = "Preloads/Images/tsi coeur.png";
+    document.getElementById('hungerLilhearts').appendChild(hungerHeart);
+  }
+}
+
+// play and mood
+setInterval(moodUpdate, 30000);
+function moodUpdate() {
+  moodLevel -= 1;
+  if (moodLevel <= 1) {
+    moodLevel = 1;
   }
 
-  // displays bg room
+  console.log(moodLevel);
+  moodText.innerHTML = `MOOD: `;
 
-  changeBgButton.addEventListener("click", changeBgPicture);
+  console.log(moodUpdate);
+  document.getElementById('lilhearts').innerHTML = "";
+  for (let i = 0; i < moodLevel; i++) {
+    let heart = document.createElement("img");
+    heart.src = "Preloads/Images/https-::www.pngitem.com:middle:hmibbwx_pink-pixel-heart-png-transparent-png:.png";
+    document.getElementById('lilhearts').appendChild(heart);
+  }
+}
 
-  function changeBgPicture() {
-    // picture might display under the main bg
-    // should we put rooms in an array? to make a loop
+playButt.addEventListener("click", playPressed);
 
-if (currentRoom >= rooms.length-1) {
-  currentRoom=0;
+function playPressed() {
+  ilySoundtrack.play();
+  setTimeout(function() {
+    room.src = "Preloads/Images/https-::www.pinterest.ca:pin:706431891538867328:.jpeg"
+    setTimeout(returnToBackground, 3000)
+  })
+function returnToBackground() {
   room.src = rooms[currentRoom]
+}
+  moodLevel += 2;
+  coins -= 5;
+  if (moodLevel >= 7) {
+    moodLevel = 7;
+  }
+  coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
+  moodText.innerHTML = `MOOD:`;
+  console.log(event);
+  console.log(this);
+
+
+  document.getElementById('lilhearts').innerHTML = "";
+
+  for (let i = 0; i < moodLevel; i++) {
+
+    let heart = document.createElement("img");
+    heart.src = "Preloads/Images/https-::www.pngitem.com:middle:hmibbwx_pink-pixel-heart-png-transparent-png:.png";
+    document.getElementById('lilhearts').appendChild(heart);
+  }
 
 }
-else {
-  currentRoom= currentRoom+1;
+// meditative kitty
+meditationButton.addEventListener("click", meditationPressed);
+
+function meditationPressed() {
+  setTimeout(function() {
+    room.src = "Preloads/Images/https-::overlordmaruyama.fandom.com:wiki:Spa_Resort_Nazarick.png"
+    setTimeout(returnToBackground, 3000)
+  })
+function returnToBackground() {
+  room.src = rooms[currentRoom]
+}
+
+  moodLevel += 3;
+  moodText.innerHTML = `MOOD:`;
+  console.log(event);
+  console.log(this);
+
+  document.getElementById('lilhearts').innerHTML = "";
+
+  for (let i = 0; i < moodLevel; i++) {
+
+    let heart = document.createElement("img");
+    heart.src = "Preloads/Images/https-::www.pngitem.com:middle:hmibbwx_pink-pixel-heart-png-transparent-png:.png";
+    document.getElementById('lilhearts').appendChild(heart);
+  }
+}
+
+
+setInterval(coinsUpdate, 10000);
+function coinsUpdate() {
+  coins += 1;
+  if (coins < 1) {
+    coins = 1;
+  }
+  console.log(coins);
+  coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
+}
+
+
+
+// plays hello
+helloButton.addEventListener("click", playHelloSound);
+function playHelloSound() {
+  helloSoundtrack.play();
+  console.log(event);
+  console.log(this);
+}
+
+// displays shower room at shower
+
+// doesnt come back to normal after 2 seconds
+// let showerTimer = setTimeout(displayShower, 5000);
+washButton.addEventListener("click", displayShower);
+
+function displayShower() {
+  setTimeout(function() {
+    showerSoundtrack.play();
+    room.src = "Preloads/Images/https-::www.pinterest.ca:pin:809522101760396658:.jpeg"
+    console.log("shower on");
+    setTimeout(returnToBackground, 3000)
+  })
+
+  function returnToBackground() {
+    console.log("back");
+    room.src = rooms[currentRoom]
+  }
+
+
+// displays bg room
+
+changeBgButton.addEventListener("click", changeBgPicture);
+function changeBgPicture() {
+  // picture might display under the main bg
+  // should we put rooms in an array? to make a loop
+  if (currentRoom >= rooms.length - 1) {
+    currentRoom = 0;
+    room.src = rooms[currentRoom]
+
+  } else {
+    currentRoom = currentRoom + 1;
 
     room.src = rooms[currentRoom]
   }
 }
-
-
-
-
-
-} //onload end
+}} //onload end
