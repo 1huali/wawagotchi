@@ -17,12 +17,11 @@ window.onload = function() {
   let moodText = document.getElementById('moodText');
   let pet = document.getElementById('pet');
   let hungerBox = document.getElementById('hungerBox');
-  // let date = document.getElementById('datetime');
 
+// let rain = document.getElementById('rain');
 
   let hungerLevel = 5;
   let coins = 15;
-
   let moodLevel = 5;
 
   // what is this for? cos its called so many times
@@ -31,7 +30,6 @@ window.onload = function() {
 
   // zone detection
   let petZone = document.querySelector('#petBox');
-  // it is in bigBox, not petBox
   let petZoneRect = petZone.getBoundingClientRect();
   // requestAnimationFrame(makeNewPosition);
 
@@ -71,7 +69,7 @@ window.onload = function() {
   helloSoundtrack = document.getElementById('helloSound');
   showerSoundtrack = document.getElementById('showerSoundtrack');
   ilySoundtrack = document.getElementById('ilySoundtrack');
-  pet = document.getElementById('pet');
+
 let fits = [];
 let currentFit =0;
 fits[0]="Preloads/Images/output-onlinegiftools.gif";
@@ -84,6 +82,7 @@ fits[1]="Preloads/Images/1output-onlinegiftools.gif";
   rooms[0] = "Preloads/Images/https-::www.tumbral.com:blog:anime-bedrooms.jpeg";
   rooms[1] = "Preloads/Images/https-::wallpapersafari.com:w:XMIvn0.png";
   rooms[2] = "Preloads/Images/https-::anime.desktopnexus.com:wallpaper:1519445:.webp"
+  rooms[3] = "Preloads/Images/https-::wallpaperaccess.com:saturne.jpeg"
 
 
   nameBox.innerHTML = "<h2> NAME: Koko </h2>";
@@ -120,10 +119,16 @@ function changeFit() {
   } else {
     currentFit = currentFit + 1;
 
-    fits.src = fits[currentFit]
+    pet.src = fits[currentFit]
   }
 }
 
+// rain
+setInterval(weatherChanging, 90000);
+
+function weatherChanging() {
+
+}
 
   // eat and hunger
   setInterval(hungerUpdate, 20000);

@@ -84,6 +84,7 @@ h2 {
 #pet-zone {
   background: rgba(255, 255, 255, 0.5);
   width: 50%;
+  /* margin-left: auto; */
 }
 
 #varBoxes {
@@ -104,7 +105,7 @@ h2 {
 .bigBox {
   width: 334px;
   height: 250px;
-  margin-left: 15px;
+  margin-left: 5px;
   margin-top: 10px;
   opacity: 1.0;
   position: relative;
@@ -124,7 +125,7 @@ h2 {
   z-index: 2;
   top: 0;
   left: 0;
-  width: 45%;
+  width: 70%;
   height: auto;
 }
 
@@ -132,7 +133,7 @@ h2 {
 #petBox {
   background-color: white;
   border: 3px solid black;
-  width: 90%;
+  width: 50%;
   margin: auto;
 }
 
@@ -153,12 +154,23 @@ h2 {
   display: flex;
 }
 
-/* do we need this in css? */
+#outerGang{
+  background: rgba(255, 255, 255, 0.5);
+  width: 49%;
+  z-index:4;
+  position:absolute;
+
+}
+
 #buttonGang {
+
   display: flex;
   justify-content: space-between;
   width: 80%;
   margin: auto;
+  margin-top:2%;
+  margin-bottom:2%;
+
 }
 
 /*LINK ESTHETIC*/
