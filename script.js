@@ -18,7 +18,8 @@ window.onload = function() {
   let pet = document.getElementById('pet');
   let hungerBox = document.getElementById('hungerBox');
 
-let weatherVar = ``;
+let weatherVar = document.getElementById('rain');
+let weatherShowing = false;
 
   let hungerLevel = 5;
   let coins = 15;
@@ -127,7 +128,15 @@ function changeFit() {
 setInterval(weatherChanging, 2000);
 
 function weatherChanging() {
-weatherVar.src = "Preloads/Images/giphy-rain.png"
+    weatherShowing = !weatherShowing;
+  if(weatherShowing){
+      weatherVar.style.display= "block";
+  }
+  else{
+      weatherVar.style.display= "none";
+  }
+
+
 console.log("weather changing");
 }
 
@@ -215,6 +224,10 @@ function returnToBackground() {
   coins -= 5;
   if (moodLevel >= 7) {
     moodLevel = 7;
+
+    pet.style.left = 50+ "px";
+    pet.style.top = 50+ "px";
+
   }
   coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
   moodText.innerHTML = `MOOD:`;
@@ -300,7 +313,6 @@ function displayShower() {
 }
 
 // displays bg room
-
 changeBgButton.addEventListener("click", changeBgPicture);
 function changeBgPicture() {
 
