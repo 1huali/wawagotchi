@@ -124,8 +124,8 @@ function changeFit() {
   }
 }
 
-// rain
-setInterval(weatherChanging, 3000);
+// rain , disabled atm
+// setInterval(weatherChanging, 3000);
 
 function weatherChanging() {
     weatherShowing = !weatherShowing;
