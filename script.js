@@ -125,7 +125,7 @@ function changeFit() {
 }
 
 // rain
-setInterval(weatherChanging, 2000);
+setInterval(weatherChanging, 3000);
 
 function weatherChanging() {
     weatherShowing = !weatherShowing;
@@ -135,10 +135,17 @@ function weatherChanging() {
   else{
       weatherVar.style.display= "none";
   }
-
-
 console.log("weather changing");
 }
+// attempt2
+// setTimeout(function() {
+// weatherVar.style.display= "block";
+//   setTimeout(returnUsualWeather, 9000)
+// })
+// function returnUsualWeather() {
+// weatherVar.style.display= "none";
+// }
+// }
 
   // eat and hunger
   setInterval(hungerUpdate, 20000);
