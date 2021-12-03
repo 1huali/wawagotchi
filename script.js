@@ -124,19 +124,18 @@ function changeFit() {
   }
 }
 
-// rain , disabled atm
-// setInterval(weatherChanging, 3000);
+// rain
+setInterval(weatherChanging, 3000);
 
 function weatherChanging() {
-    weatherShowing = !weatherShowing;
-  if(weatherShowing){
       weatherVar.style.display= "block";
-  }
-  else{
-      weatherVar.style.display= "none";
+      setTimeout(function() {
+        weatherVar.style.display="none";
+}
+,1000);
   }
 console.log("weather changing");
-}
+
 // attempt2
 // setTimeout(function() {
 // weatherVar.style.display= "block";

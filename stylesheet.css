@@ -7,6 +7,7 @@ body {
 }
 .center {
   text-align: center;
+  background: red;
   margin: auto;
 width: 60%;
   /* justify-content: space-around; */
@@ -61,20 +62,18 @@ h2 {
 
 #parentBox {
   width: :45%;
-  min-height: 500px;
   background: rgb(245, 244, 188);
   position: : relative;
-  margin-left: 2%;
+  margin-left: 0%;
   padding-top: : 5px;
   opacity: 1;
 }
 
 #journalBox {
   width: :95%;
-  min-height: 500px;
   background: rgb(245, 244, 188);
   position: : relative;
-  margin-left: 2%;
+  margin-left: 0%;
   padding-top: : 5px;
   opacity: 1;
 }
