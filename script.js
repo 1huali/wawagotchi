@@ -3,9 +3,9 @@ let birth = undefined;
 let sign = undefined;
 
 window.onload= function (){
-// diary();
+diary();
 // hides the parent box
-document.getElementById('parentBox').style.display = 'none';
+// document.getElementById('parentBox').style.display = 'none';
 }
 
 function diary (){
