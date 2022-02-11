@@ -5,18 +5,102 @@ let sign = undefined;
 //states
 let state = `intro`;
 
-window.onload= function (){
-tamagotchi();
-diary();
+
+let animalData = `undefined`;
+let colorData = `undefined`;
+let animalColor = `undefined`;
+let formData = `undefined`;
+let animal = `undefined`;
+let nameOfGuardian = `undefined`;
+
+let animalResponse = false;
+let secretData = undefined;
+let hideSecret = false;
+let secretExposed = false;
+
+// let mood = `undefined`;
+let animalEcho = undefined;
+
+let characteristic = {
+  type: `tbd`,
+  form: `tbd`,
+  element: `tbd`,
+  name: `tbd`,
+  features: `tbd`,
+  texture: `tbd`,
+  animalColor: `tbd`,
+  animal: `tbd`,
+  secret: `tbd`,
+  password: `tbd`
+}
+let guardianProfile = null;
+let passedVerification = false;
+
+/**
+loads the json lists
+*/
+function preload() {
+  animalData = loadJSON(`https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/common.json`);
+  formData = loadJSON(`Form.json`);
+  colorData = loadJSON(`Colors.json`);
+  //https://raw.githubusercontent.com/dariusk/corpora/master/data/colors/wikipedia.json
+  animalEcho = loadSound(`Preloads/Sounds/bark.wav`);
+
+}
+
+function setup (){
+  intro();
+//tamagotchi();
+//diary();
 console.log(state);
-// hides the parent box
+localStorage.removeItem('guardianData');
+
+
+//set the guardian or generates one
+if (localStorage.getItem(`guardianData`) === null) {
+  setGuardianProfile();
+  passedVerification = true;
+}
+// if (annyang) {
+//   let commands = {
+//     'I promise': function() {
+//       animalResponse = true;
+//       tellMeUrSecret();
+//     }
+//   };
+//   annyang.addCommands(commands);
+//   annyang.start();
+// }
+// }
+}
+
+function setGuardianProfile(){
+let animal = random(formData.animals);
+let animalFeature = random(formData.animals);
+let animalColor = random(colorData.animalColors);
+let animalForm = random(animalData);
+let animalTexture = random(formData.animals);
+
+characteristic.name = prompt(`PET SHOP SERVICE: Hi. Got some secrets to protect? Choose a name for your new guardian.`)
+characteristic.animal = random(animalData.animals);
+characteristic.type = random(animal.Type);
+characteristic.form = animalForm;
+characteristic.features = random(animalFeature.Form);
+characteristic.texture = random(animalFeature.Texture);
+characteristic.element = random(animal.Element);
+characteristic.animalColor = animalColor.name;
+characteristic.secret = "";
+localStorage.setItem(`guardianData`, JSON.stringify(characteristic));
+guardianProfile = characteristic;
+console.log(guardianProfile);
+//call the tamagotchi state;
+tamagotchi();
 }
 
 function intro(){
 //  let introBox = document.getElementById('introBox');
 //  document.getElementById('introBox').style.display = 'none';
   document.getElementById('parentBox').style.display = 'none';
-
 }
 
 function tamagotchi (){
@@ -334,12 +418,13 @@ function displayShower() {
     console.log("shower on");
     setTimeout(returnToBackground, 3000)
   })
+}
 
   function returnToBackground() {
     console.log("back");
     room.src = rooms[currentRoom]
   }
-}
+
 
 // displays bg room
 changeBgButton.addEventListener("click", changeBgPicture);
@@ -355,23 +440,30 @@ function changeBgPicture() {
   }
   console.log("change button click")
 }
+}
+
 
 function diary (){
   document.getElementById('journalBox').style.display = 'block';
 }
 
-function draw(){
-  if (state === `intro`){
-    intro();
-    // switchToTamagotchi();
-  } else if (state=== `tamagotchi`){
-    tamagotchi();
-    // secretGuardianGenerator();
-    // askPassword();
-  } else if (state === `diary`){
-    diary();
-    // secretGuardian();
-  }
-}
 
-} //onload end
+
+// function draw(){
+//   if (state === `intro`){
+//     intro();
+//     // switchToTamagotchi();
+//   } else if (state=== `tamagotchi`){
+//     tamagotchi();
+//     // secretGuardianGenerator();
+//     // askPassword();
+//   } else if (state === `diary`){
+//     diary();
+//     // secretGuardian();
+//   }
+// }
+
+
+
+
+//onload end}
