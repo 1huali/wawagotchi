@@ -190,6 +190,20 @@ h2 {
   width:40%;
 }
 
+#introBox{
+  background: rgba(245, 244, 188);
+  margin:1%;
+  height:100vh;
+  width:100vw;
+}
+
+#theService{
+  background: rgba(255, 255, 255);
+  margin:1%;
+  height:80vh;
+  margin-left: 10vw;
+  width:80vw;
+}
 /*LINK ESTHETIC*/
 /* unvisited link */
 a:link {

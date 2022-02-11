@@ -2,16 +2,30 @@ let name = "koko";
 let birth = undefined;
 let sign = undefined;
 
+//states
+let state = `intro`;
+
 window.onload= function (){
+tamagotchi();
 diary();
+console.log(state);
 // hides the parent box
-// document.getElementById('parentBox').style.display = 'none';
 }
 
-function diary (){
-// window.onload = function() {
-  //last state
+function intro(){
+//  let introBox = document.getElementById('introBox');
+//  document.getElementById('introBox').style.display = 'none';
+  document.getElementById('parentBox').style.display = 'none';
+
+}
+
+function tamagotchi (){
   document.getElementById('parentBox').style.display = 'block';
+  document.getElementById('introBox').style.display = 'none';
+  state = `tamagotchi`;
+  console.log(state);
+// window.onload = function() {
+
   let dt = new Date();
   // presets
   let nameBox = document.getElementById('nameBox');
@@ -340,6 +354,24 @@ function changeBgPicture() {
     room.src = rooms[currentRoom]
   }
   console.log("change button click")
+}
+
+function diary (){
+  document.getElementById('journalBox').style.display = 'block';
+}
+
+function draw(){
+  if (state === `intro`){
+    intro();
+    // switchToTamagotchi();
+  } else if (state=== `tamagotchi`){
+    tamagotchi();
+    // secretGuardianGenerator();
+    // askPassword();
+  } else if (state === `diary`){
+    diary();
+    // secretGuardian();
+  }
 }
 
 } //onload end
