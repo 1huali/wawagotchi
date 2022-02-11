@@ -2,7 +2,16 @@ let name = "koko";
 let birth = undefined;
 let sign = undefined;
 
-window.onload = function() {
+window.onload= function (){
+// diary();
+// hides the parent box
+document.getElementById('parentBox').style.display = 'none';
+}
+
+function diary (){
+// window.onload = function() {
+  //last state
+  document.getElementById('parentBox').style.display = 'block';
   let dt = new Date();
   // presets
   let nameBox = document.getElementById('nameBox');
