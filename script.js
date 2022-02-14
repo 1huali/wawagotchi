@@ -2,8 +2,9 @@ let name = "koko";
 let birth = undefined;
 let sign = undefined;
 
-//profileBox
-let infos;
+//guardian's Box
+// let thoughtsList= [];
+// let thoughts;
 
 //states
 let state = `intro`;
@@ -129,19 +130,10 @@ profileBox.innerHTML += `<h2> Say you promise and your secrets will be safe with
 //         hideSecret = true;
 //       }, 3000)
 //     }
-//
-//     if (secretExposed === true) {
-//       displaySecret();
-//     }
-//     push();
-//     textSize(10);
-//     textAlign(TOP, LEFT);
-//     fill(0);
-//     text(guardian, 10, 100);
-//     pop();
-//   } else {
-//     testGuardianName();
-//   }
+}
+
+function displayGuardiansThoughts(){
+  animalThoughtsBox.innerHTML += `<h2> hey U its me ${guardianProfile.name} </h2>`;
 }
 
 function tellMeUrSecret() {
@@ -197,6 +189,7 @@ function displaySecret() {
 
 function tamagotchi() {
   displayGuardianInstructions();
+  displayGuardiansThoughts();
   document.getElementById('parentBox').style.display = 'block';
   document.getElementById('introBox').style.display = 'none';
   state = `tamagotchi`;
@@ -218,6 +211,7 @@ function tamagotchi() {
   let pet = document.getElementById('pet');
   let hungerBox = document.getElementById('hungerBox');
   let profileBox = document.getElementById('profileBox');
+  let animalThoughtsBox = document.getElementById('animalThoughtsBox');
 
   let weatherVar = document.getElementById('rain');
   let weatherShowing = false;
