@@ -48,53 +48,94 @@ function preload() {
 
 }
 
-function setup (){
+function setup() {
   intro();
-//tamagotchi();
-//diary();
-console.log(state);
-localStorage.removeItem('guardianData');
+  //tamagotchi();
+  //diary();
+  console.log(state);
+  localStorage.removeItem('guardianData');
 
 
-//set the guardian or generates one
-if (localStorage.getItem(`guardianData`) === null) {
-  setGuardianProfile();
-  passedVerification = true;
+  //set the guardian or generates one
+  if (localStorage.getItem(`guardianData`) === null) {
+    setGuardianProfile();
+    passedVerification = true;
+  }
+  if (annyang) {
+    let commands = {
+      'I promise': function() {
+        animalResponse = true;
+        tellMeUrSecret();
+      }
+    };
+    annyang.addCommands(commands);
+    annyang.start();
+  }
 }
-if (annyang) {
-  let commands = {
-    'I promise': function() {
-      animalResponse = true;
-      tellMeUrSecret();
+
+
+function setGuardianProfile() {
+
+  let animal = random(formData.animals);
+  let animalFeature = random(formData.animals);
+  let animalColor = random(colorData.animalColors);
+  let animalForm = random(animalData);
+  let animalTexture = random(formData.animals);
+
+  characteristic.name = prompt(`PET SHOP SERVICE: Hi. Got some secrets to protect? Choose a name for your new guardian.`);
+  characteristic.animal = random(animalData.animals);
+  characteristic.type = random(animal.Type);
+  characteristic.form = animalForm;
+  characteristic.features = random(animalFeature.Form);
+  characteristic.texture = random(animalFeature.Texture);
+  characteristic.element = random(animal.Element);
+  characteristic.animalColor = animalColor.name;
+  characteristic.secret = "";
+  characteristic.password = prompt(`PET SHOP SERVICE: Set a password you for eventual authentification.`)
+  localStorage.setItem(`guardianData`, JSON.stringify(characteristic));
+  guardianProfile = characteristic;
+  console.log(guardianProfile);
+displayGuardianInstructions();
+  //call the tamagotchi state;
+  tamagotchi();
+}
+
+function displayGuardianInstructions() {
+  if (passedVerification) {
+    let guardian = `Hi, here is the guardian keeper of your secrets.
+Name: ${guardianProfile.name}
+Form : ${guardianProfile.animal}
+Type : ${guardianProfile.type}
+Features : ${guardianProfile.features}
+Texture : ${guardianProfile.texture}
+Element: ${guardianProfile.element}
+Color : ${guardianProfile.animalColor}
+Will you take care of me forever?
+Say you promise and your secrets will be safe with ${guardianProfile.name}.`;
+
+    if (animalResponse === true) {
+      console.log(animalResponse);
+      // Q: why animal only plays when mousePressed? and why it has to be in draw cos the music is glitchy
+      animalEcho.play();
+      animalResponse = false;
+      secretExposed = true;
+      setTimeout(function() {
+        hideSecret = true;
+      }, 3000)
     }
-  };
-  annyang.addCommands(commands);
-  annyang.start();
-}
-}
 
-
-function setGuardianProfile(){
-let animal = random(formData.animals);
-let animalFeature = random(formData.animals);
-let animalColor = random(colorData.animalColors);
-let animalForm = random(animalData);
-let animalTexture = random(formData.animals);
-
-characteristic.name = prompt(`PET SHOP SERVICE: Hi. Got some secrets to protect? Choose a name for your new guardian.`)
-characteristic.animal = random(animalData.animals);
-characteristic.type = random(animal.Type);
-characteristic.form = animalForm;
-characteristic.features = random(animalFeature.Form);
-characteristic.texture = random(animalFeature.Texture);
-characteristic.element = random(animal.Element);
-characteristic.animalColor = animalColor.name;
-characteristic.secret = "";
-localStorage.setItem(`guardianData`, JSON.stringify(characteristic));
-guardianProfile = characteristic;
-console.log(guardianProfile);
-//call the tamagotchi state;
-tamagotchi();
+    if (secretExposed === true) {
+      displaySecret();
+    }
+    push();
+    textSize(10);
+    textAlign(TOP, LEFT);
+    fill(0);
+    text(guardian, 10, 100);
+    pop();
+  } else {
+    testGuardianName();
+  }
 }
 
 function tellMeUrSecret() {
@@ -103,18 +144,57 @@ function tellMeUrSecret() {
   guardianProfile.secret = guardianProfile.secret + "," + secretData;
   localStorage.setItem('guardianData', JSON.stringify(guardianProfile));
 }
-function intro(){
-//  let introBox = document.getElementById('introBox');
-//  document.getElementById('introBox').style.display = 'none';
+
+function intro() {
+  //  let introBox = document.getElementById('introBox');
+  //  document.getElementById('introBox').style.display = 'none';
   document.getElementById('parentBox').style.display = 'none';
 }
 
-function tamagotchi (){
+//when the user is coming back
+function testGuardianName() {
+  let testName = prompt(`PET SHOP SERVICE: Welcome back. Your guardian's name please?`);
+  guardianProfile = JSON.parse(localStorage.getItem(`guardianData`));
+  let passwordEntry = prompt(`PET SHOP SERVICE: What is the password?`)
+
+  if (testName === guardianProfile.name) {
+    console.log(guardianProfile);
+    passedVerification = true;
+  } else {
+    passedVerification = false;
+  }
+  //
+  // if (passwordEntry === guardianProfile.password) {
+  //   diary();
+  // } else {
+  //   passedVerification = false;
+  // }
+}
+
+//design the secret zone
+function displaySecret() {
+  push();
+  // textFont(`Courrier, monospace`);
+  textSize(120);
+  textAlign(TOP, LEFT);
+  fill(0);
+  if (hideSecret === false) {
+    let splitSecrets = guardianProfile.secret.split(",");
+    for (let i = 1; i < splitSecrets.length; i++) {
+      text(splitSecrets[i], 100, 400 + (i * 50));
+    }
+  } else {
+    text(`This secret is safe with me now`, 100, 400);
+  }
+  pop();
+}
+
+function tamagotchi() {
   document.getElementById('parentBox').style.display = 'block';
   document.getElementById('introBox').style.display = 'none';
   state = `tamagotchi`;
   console.log(state);
-// window.onload = function() {
+  // window.onload = function() {
 
   let dt = new Date();
   // presets
@@ -131,8 +211,8 @@ function tamagotchi (){
   let pet = document.getElementById('pet');
   let hungerBox = document.getElementById('hungerBox');
 
-let weatherVar = document.getElementById('rain');
-let weatherShowing = false;
+  let weatherVar = document.getElementById('rain');
+  let weatherShowing = false;
 
   let hungerLevel = 5;
   let coins = 15;
@@ -177,17 +257,17 @@ let weatherShowing = false;
   let washButton = document.getElementById('washButton');
   let meditationButton = document.getElementById('meditateButton');
   let changeBgButton = document.getElementById('newRoom');
-  let changeFitButton= document.getElementById('newKokoButton');
+  let changeFitButton = document.getElementById('newKokoButton');
 
   // // preload
   helloSoundtrack = document.getElementById('helloSound');
   showerSoundtrack = document.getElementById('showerSoundtrack');
   ilySoundtrack = document.getElementById('ilySoundtrack');
 
-let fits = [];
-let currentFit =0;
-fits[0]="Preloads/Images/output-onlinegiftools.gif";
-fits[1]="Preloads/Images/1output-onlinegiftools.gif";
+  let fits = [];
+  let currentFit = 0;
+  fits[0] = "Preloads/Images/output-onlinegiftools.gif";
+  fits[1] = "Preloads/Images/1output-onlinegiftools.gif";
 
   room = document.getElementById('room');
   ramenRoom = document.getElementById('dinnerBackground');
@@ -222,42 +302,41 @@ fits[1]="Preloads/Images/1output-onlinegiftools.gif";
 
   // functions
 
-// change fit
+  // animal change outfit
+  changeFitButton.addEventListener("click", changeFit);
 
-changeFitButton.addEventListener("click", changeFit);
-function changeFit() {
-  if (currentFit >= fits.length - 1) {
-    currentFit = 0;
-    pet.src = fits[currentFit]
+  function changeFit() {
+    if (currentFit >= fits.length - 1) {
+      currentFit = 0;
+      pet.src = fits[currentFit]
 
-  } else {
-    currentFit = currentFit + 1;
+    } else {
+      currentFit = currentFit + 1;
 
-    pet.src = fits[currentFit]
+      pet.src = fits[currentFit]
+    }
   }
-}
 
-// rain
-setInterval(weatherChanging, 3000);
+  // intermittent rain
+  setInterval(weatherChanging, 3000);
 
-function weatherChanging() {
-      weatherVar.style.display= "block";
-      setTimeout(function() {
-        weatherVar.style.display="none";
-}
-,1000);
+  function weatherChanging() {
+    weatherVar.style.display = "block";
+    setTimeout(function() {
+      weatherVar.style.display = "none";
+    }, 1000);
   }
-console.log("weather changing");
+  console.log("weather changing");
 
-// attempt2
-// setTimeout(function() {
-// weatherVar.style.display= "block";
-//   setTimeout(returnUsualWeather, 9000)
-// })
-// function returnUsualWeather() {
-// weatherVar.style.display= "none";
-// }
-// }
+  // attempt2
+  // setTimeout(function() {
+  // weatherVar.style.display= "block";
+  //   setTimeout(returnUsualWeather, 9000)
+  // })
+  // function returnUsualWeather() {
+  // weatherVar.style.display= "none";
+  // }
+  // }
 
   // eat and hunger
   setInterval(hungerUpdate, 20000);
@@ -285,146 +364,151 @@ console.log("weather changing");
       setTimeout(returnToBackground, 3000)
     })
 
-  function returnToBackground() {
-    room.src = rooms[currentRoom]
-  }
-  hungerLevel += 4;
-  coins -= 5;
-  if (hungerLevel >= 7) {
-    hungerLevel = 7;
-  }
-  coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
-  hungerText.innerHTML = `BELLY:`;
-  console.log(event);
-  console.log(this);
+    function returnToBackground() {
+      room.src = rooms[currentRoom]
+    }
+    hungerLevel += 4;
+    coins -= 5;
+    if (hungerLevel >= 7) {
+      hungerLevel = 7;
+    }
+    coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
+    hungerText.innerHTML = `BELLY:`;
+    console.log(event);
+    console.log(this);
 
-  document.getElementById('hungerLilhearts').innerHTML = "";
+    document.getElementById('hungerLilhearts').innerHTML = "";
 
-  for (let i = 0; i < hungerLevel; i++) {
+    for (let i = 0; i < hungerLevel; i++) {
 
-    let hungerHeart = document.createElement("img");
-    hungerHeart.src = "Preloads/Images/tsi coeur.png";
-    document.getElementById('hungerLilhearts').appendChild(hungerHeart);
-  }
-}
-
-// play and mood
-setInterval(moodUpdate, 30000);
-function moodUpdate() {
-  moodLevel -= 1;
-  if (moodLevel <= 1) {
-    moodLevel = 1;
+      let hungerHeart = document.createElement("img");
+      hungerHeart.src = "Preloads/Images/tsi coeur.png";
+      document.getElementById('hungerLilhearts').appendChild(hungerHeart);
+    }
   }
 
-  console.log(moodLevel);
-  moodText.innerHTML = `MOOD: `;
+  // play and mood
+  setInterval(moodUpdate, 30000);
 
-  // console.log(moodUpdate);
-  document.getElementById('lilhearts').innerHTML = "";
-  for (let i = 0; i < moodLevel; i++) {
-    let heart = document.createElement("img");
-    heart.src = "Preloads/Images/https-::www.pngitem.com:middle:hmibbwx_pink-pixel-heart-png-transparent-png:.png";
-    document.getElementById('lilhearts').appendChild(heart);
-  }
-}
+  function moodUpdate() {
+    moodLevel -= 1;
+    if (moodLevel <= 1) {
+      moodLevel = 1;
+    }
 
-playButt.addEventListener("click", playPressed);
+    console.log(moodLevel);
+    moodText.innerHTML = `MOOD: `;
 
-function playPressed() {
-  ilySoundtrack.play();
-  setTimeout(function() {
-    room.src = "Preloads/Images/https-::www.pinterest.ca:pin:706431891538867328:.jpeg"
-    setTimeout(returnToBackground, 3000)
-  })
-function returnToBackground() {
-  room.src = rooms[currentRoom]
-}
-  moodLevel += 2;
-  coins -= 5;
-  if (moodLevel >= 7) {
-    moodLevel = 7;
-
-    pet.style.left = 50+ "px";
-    pet.style.top = 50+ "px";
-
-  }
-  coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
-  moodText.innerHTML = `MOOD:`;
-  console.log(event);
-  console.log(this);
-
-
-  document.getElementById('lilhearts').innerHTML = "";
-
-  for (let i = 0; i < moodLevel; i++) {
-
-    let heart = document.createElement("img");
-    heart.src = "Preloads/Images/https-::www.pngitem.com:middle:hmibbwx_pink-pixel-heart-png-transparent-png:.png";
-    document.getElementById('lilhearts').appendChild(heart);
+    // console.log(moodUpdate);
+    document.getElementById('lilhearts').innerHTML = "";
+    for (let i = 0; i < moodLevel; i++) {
+      let heart = document.createElement("img");
+      heart.src = "Preloads/Images/https-::www.pngitem.com:middle:hmibbwx_pink-pixel-heart-png-transparent-png:.png";
+      document.getElementById('lilhearts').appendChild(heart);
+    }
   }
 
-}
-// meditative kitty
-meditationButton.addEventListener("click", meditationPressed);
+  playButt.addEventListener("click", playPressed);
 
-function meditationPressed() {
-  setTimeout(function() {
-    room.src = "Preloads/Images/https-::overlordmaruyama.fandom.com:wiki:Spa_Resort_Nazarick.png"
-    setTimeout(returnToBackground, 3000)
-  })
-function returnToBackground() {
-  room.src = rooms[currentRoom]
-}
+  function playPressed() {
+    ilySoundtrack.play();
+    setTimeout(function() {
+      room.src = "Preloads/Images/https-::www.pinterest.ca:pin:706431891538867328:.jpeg"
+      setTimeout(returnToBackground, 3000)
+    })
 
-  moodLevel += 3;
-  moodText.innerHTML = `MOOD:`;
-  console.log(event);
-  console.log(this);
+    function returnToBackground() {
+      room.src = rooms[currentRoom]
+    }
+    moodLevel += 2;
+    coins -= 5;
+    if (moodLevel >= 7) {
+      moodLevel = 7;
 
-  document.getElementById('lilhearts').innerHTML = "";
+      pet.style.left = 50 + "px";
+      pet.style.top = 50 + "px";
 
-  for (let i = 0; i < moodLevel; i++) {
+    }
+    coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
+    moodText.innerHTML = `MOOD:`;
+    console.log(event);
+    console.log(this);
 
-    let heart = document.createElement("img");
-    heart.src = "Preloads/Images/https-::www.pngitem.com:middle:hmibbwx_pink-pixel-heart-png-transparent-png:.png";
-    document.getElementById('lilhearts').appendChild(heart);
+
+    document.getElementById('lilhearts').innerHTML = "";
+
+    for (let i = 0; i < moodLevel; i++) {
+
+      let heart = document.createElement("img");
+      heart.src = "Preloads/Images/https-::www.pngitem.com:middle:hmibbwx_pink-pixel-heart-png-transparent-png:.png";
+      document.getElementById('lilhearts').appendChild(heart);
+    }
+
   }
-}
+  // meditative kitty
+  meditationButton.addEventListener("click", meditationPressed);
 
+  function meditationPressed() {
+    setTimeout(function() {
+      room.src = "Preloads/Images/https-::overlordmaruyama.fandom.com:wiki:Spa_Resort_Nazarick.png"
+      setTimeout(returnToBackground, 3000)
+    })
 
-setInterval(coinsUpdate, 10000);
-function coinsUpdate() {
-  coins += 1;
-  if (coins < 1) {
-    coins = 1;
+    function returnToBackground() {
+      room.src = rooms[currentRoom]
+    }
+
+    moodLevel += 3;
+    moodText.innerHTML = `MOOD:`;
+    console.log(event);
+    console.log(this);
+
+    document.getElementById('lilhearts').innerHTML = "";
+
+    for (let i = 0; i < moodLevel; i++) {
+
+      let heart = document.createElement("img");
+      heart.src = "Preloads/Images/https-::www.pngitem.com:middle:hmibbwx_pink-pixel-heart-png-transparent-png:.png";
+      document.getElementById('lilhearts').appendChild(heart);
+    }
   }
-  coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
-}
+
+
+  setInterval(coinsUpdate, 10000);
+
+  function coinsUpdate() {
+    coins += 1;
+    if (coins < 1) {
+      coins = 1;
+    }
+    coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
+  }
 
 
 
-// plays hello
-helloButton.addEventListener("click", playHelloSound);
-function playHelloSound() {
-  helloSoundtrack.play();
-  console.log(event);
-  console.log(this);
-}
+  // plays hello
+  helloButton.addEventListener("click", playHelloSound);
 
-// displays shower room at shower
+  function playHelloSound() {
+    helloSoundtrack.play();
+    console.log(event);
+    console.log(this);
+  }
 
-// doesnt come back to normal after 2 seconds
-// let showerTimer = setTimeout(displayShower, 5000);
-washButton.addEventListener("click", displayShower);
+  // displays shower room at shower
 
-function displayShower() {
-  setTimeout(function() {
-    showerSoundtrack.play();
-    room.src = "Preloads/Images/https-::www.pinterest.ca:pin:809522101760396658:.jpeg"
-    console.log("shower on");
-    setTimeout(returnToBackground, 3000)
-  })
-}
+  // doesnt come back to normal after 2 seconds
+  // let showerTimer = setTimeout(displayShower, 5000);
+  washButton.addEventListener("click", displayShower);
+
+  function displayShower() {
+    setTimeout(function() {
+      showerSoundtrack.play();
+      room.src = "Preloads/Images/https-::www.pinterest.ca:pin:809522101760396658:.jpeg"
+      console.log("shower on");
+      setTimeout(returnToBackground, 3000)
+    })
+  }
 
   function returnToBackground() {
     console.log("back");
@@ -432,27 +516,28 @@ function displayShower() {
   }
 
 
-// displays bg room
-changeBgButton.addEventListener("click", changeBgPicture);
-function changeBgPicture() {
+  // displays bg room
+  changeBgButton.addEventListener("click", changeBgPicture);
 
-  if (currentRoom >= rooms.length - 1) {
-    currentRoom = 0;
-    room.src = rooms[currentRoom]
+  function changeBgPicture() {
 
-  } else {
-    currentRoom = currentRoom + 1;
-    room.src = rooms[currentRoom]
+    if (currentRoom >= rooms.length - 1) {
+      currentRoom = 0;
+      room.src = rooms[currentRoom]
+
+    } else {
+      currentRoom = currentRoom + 1;
+      room.src = rooms[currentRoom]
+    }
+    console.log("change button click")
   }
-  console.log("change button click")
-}
 }
 
 
-function diary (){
+function diary() {
+  state = `diary`;
   document.getElementById('journalBox').style.display = 'block';
 }
-
 
 
 // function draw(){
@@ -468,8 +553,4 @@ function diary (){
 //     // secretGuardian();
 //   }
 // }
-
-
-
-
 //onload end}
