@@ -61,18 +61,18 @@ if (localStorage.getItem(`guardianData`) === null) {
   setGuardianProfile();
   passedVerification = true;
 }
-// if (annyang) {
-//   let commands = {
-//     'I promise': function() {
-//       animalResponse = true;
-//       tellMeUrSecret();
-//     }
-//   };
-//   annyang.addCommands(commands);
-//   annyang.start();
-// }
-// }
+if (annyang) {
+  let commands = {
+    'I promise': function() {
+      animalResponse = true;
+      tellMeUrSecret();
+    }
+  };
+  annyang.addCommands(commands);
+  annyang.start();
 }
+}
+
 
 function setGuardianProfile(){
 let animal = random(formData.animals);
@@ -97,6 +97,12 @@ console.log(guardianProfile);
 tamagotchi();
 }
 
+function tellMeUrSecret() {
+  secretData = prompt(`${guardianProfile.name} : Tell me your secret.`)
+  //let secret = JSON.stringify(localStorage.getItem(`secretData`));
+  guardianProfile.secret = guardianProfile.secret + "," + secretData;
+  localStorage.setItem('guardianData', JSON.stringify(guardianProfile));
+}
 function intro(){
 //  let introBox = document.getElementById('introBox');
 //  document.getElementById('introBox').style.display = 'none';
@@ -193,9 +199,9 @@ fits[1]="Preloads/Images/1output-onlinegiftools.gif";
   rooms[3] = "Preloads/Images/https-::wallpaperaccess.com:saturne.jpeg"
 
 
-  nameBox.innerHTML = "<h2> NAME: Koko </h2>";
+  nameBox.innerHTML = `<h2> NAME: ${characteristic.name} </h2>`;
   birthBox.innerHTML = `<h2> DAY AND TIME: ${dt.toLocaleString()} </h2>`;
-  signBox.innerHTML = "<h2> SIGN: Earth </h2>";
+  signBox.innerHTML = `<h2> ELEMENT: ${characteristic.element} </h2>`;
   coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
   moodText.innerHTML = `MOOD: `;
   hungerText.innerHTML = `BELLY: `;
