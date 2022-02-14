@@ -55,7 +55,7 @@ function preload() {
 function setup() {
   intro();
   //tamagotchi();
-  //diary();
+  //secret();
   console.log(state);
   localStorage.removeItem('guardianData');
 
@@ -73,6 +73,14 @@ function setup() {
       'I promise': function() {
         animalResponse = true;
         tellMeUrSecret();
+      },
+      'show me': function() {
+        secretState();
+        console.log(annyang);
+      },
+      'hide': function() {
+        tamagotchi();
+        console.log(annyang);
       }
     };
     annyang.addCommands(commands);
@@ -89,7 +97,8 @@ function setGuardianProfile() {
   let animalForm = random(animalData);
   let animalTexture = random(formData.animals);
 
-  characteristic.name = prompt(`PET SHOP SERVICE: Hi. Got some secrets to protect? Choose a name for your new guardian.`);
+  characteristic.name = inputName;
+  // characteristic.name = prompt(`PET SHOP SERVICE: Hi. Choose a name for your new guardian.`);
   characteristic.animal = random(animalData.animals);
   characteristic.type = random(animal.Type);
   characteristic.form = animalForm;
@@ -98,7 +107,8 @@ function setGuardianProfile() {
   characteristic.element = random(animal.Element);
   characteristic.animalColor = animalColor.name;
   characteristic.secret = "";
-  characteristic.password = prompt(`PET SHOP SERVICE: Set a password that you will remember for eventual authentifications.`)
+  characteristic.password = inputPassword;
+  // characteristic.password = prompt(`PET SHOP SERVICE: Set a password that you will remember for eventual authentifications.`)
   localStorage.setItem(`guardianData`, JSON.stringify(characteristic));
   guardianProfile = characteristic;
   console.log(guardianProfile);
@@ -120,71 +130,63 @@ profileBox.innerHTML += `<h2> Color : ${guardianProfile.animalColor}</h2>`;
 profileBox.innerHTML += `<h2> Will you take care of me forever?</h2>`;
 profileBox.innerHTML += `<h2> Say you promise and your secrets will be safe with ${guardianProfile.name}. </h2>`;
 //
-//     if (animalResponse === true) {
-//       console.log(animalResponse);
-//       // Q: why animal only plays when mousePressed? and why it has to be in draw cos the music is glitchy
-//       animalEcho.play();
-//       animalResponse = false;
-//       secretExposed = true;
-//       setTimeout(function() {
-//         hideSecret = true;
-//       }, 3000)
-//     }
+    if (animalResponse === true) {
+      console.log(animalResponse);
+      // Q: why animal only plays when mousePressed? and why it has to be in draw cos the music is glitchy
+      // animalEcho.play();
+      animalResponse = false;
+      secretExposed = true;
+      setTimeout(function() {
+        hideSecret = true;
+      }, 3000)
+    }
 }
 
 function displayGuardiansThoughts(){
   animalThoughtsBox.innerHTML += `<h2> hey U its me ${guardianProfile.name} </h2>`;
 }
 
+// adds new secret to the array
 function tellMeUrSecret() {
-  secretData = prompt(`${guardianProfile.name} : Tell me your secret.`)
-  //let secret = JSON.stringify(localStorage.getItem(`secretData`));
+  secretData = prompt(`${guardianProfile.name} : Tell me your secret.`);
   guardianProfile.secret = guardianProfile.secret + "," + secretData;
   localStorage.setItem('guardianData', JSON.stringify(guardianProfile));
 }
 
+//activates the intro layout
 function intro() {
-  //  let introBox = document.getElementById('introBox');
   //  document.getElementById('introBox').style.display = 'none';
   document.getElementById('parentBox').style.display = 'none';
 }
 
-//when the user is coming back
+//authentification thru password when the user is coming back
 function testGuardianName() {
-  let testName = prompt(`PET SHOP SERVICE: Welcome back. Your guardian's name please?`);
+  // let testName = prompt(`PET SHOP SERVICE: Welcome back. Your guardian's name please?`);
   guardianProfile = JSON.parse(localStorage.getItem(`guardianData`));
   let passwordEntry = prompt(`PET SHOP SERVICE: What is the password?`)
-
-  if (testName === guardianProfile.name) {
-    console.log(guardianProfile);
+  //
+  // if (testName === guardianProfile.name) {
+  //   console.log(guardianProfile);
+  //   tamagotchi();
+  // } else {
+  //   passedVerification = false;
+  // }
+  //
+  if (passwordEntry === guardianProfile.password) {
     tamagotchi();
   } else {
     passedVerification = false;
   }
-  //
-  // if (passwordEntry === guardianProfile.password) {
-  //   diary();
-  // } else {
-  //   passedVerification = false;
-  // }
 }
 
-//design the secret zone
+//secrets appear in their zone
 function displaySecret() {
-  push();
-  // textFont(`Courrier, monospace`);
-  textSize(120);
-  textAlign(TOP, LEFT);
-  fill(0);
   if (hideSecret === false) {
-    let splitSecrets = guardianProfile.secret.split(",");
-    for (let i = 1; i < splitSecrets.length; i++) {
-      text(splitSecrets[i], 100, 400 + (i * 50));
-    }
+    secretsBox.innerHTML += `<h2> ${guardianProfile.secret} </h2>`;
+    // hideSecret === true;
   } else {
-    text(`This secret is safe with me now`, 100, 400);
+    hideSecret === true;
   }
-  pop();
 }
 
 function tamagotchi() {
@@ -192,12 +194,13 @@ function tamagotchi() {
   displayGuardiansThoughts();
   document.getElementById('parentBox').style.display = 'block';
   document.getElementById('introBox').style.display = 'none';
+  document.getElementById('secretsBox').style.display = 'none';
   state = `tamagotchi`;
   console.log(state);
   // window.onload = function() {
 
   let dt = new Date();
-  // presets
+  // load boxes
   let nameBox = document.getElementById('nameBox');
   console.log(nameBox);
   let birthBox = document.getElementById('birthBox');
@@ -212,6 +215,7 @@ function tamagotchi() {
   let hungerBox = document.getElementById('hungerBox');
   let profileBox = document.getElementById('profileBox');
   let animalThoughtsBox = document.getElementById('animalThoughtsBox');
+  let secretsBox = document.getElementById('secretsBox');
 
   let weatherVar = document.getElementById('rain');
   let weatherShowing = false;
@@ -260,6 +264,8 @@ function tamagotchi() {
   let meditationButton = document.getElementById('meditateButton');
   let changeBgButton = document.getElementById('newRoom');
   let changeFitButton = document.getElementById('newKokoButton');
+  let inputName = document.getElementById('inputName');
+  let inputPassword = document.getElementById('inputPassword');
 
   // // preload
   helloSoundtrack = document.getElementById('helloSound');
@@ -537,9 +543,12 @@ function tamagotchi() {
 }
 
 
-function diary() {
-  state = `diary`;
-  document.getElementById('journalBox').style.display = 'block';
+function secretState() {
+  state = `secret`;
+  console.log(state);
+  document.getElementById('secretsBox').style.display = 'block';
+
+  displaySecret();
 }
 
 
@@ -551,8 +560,8 @@ function diary() {
 //     tamagotchi();
 //     // secretGuardianGenerator();
 //     // askPassword();
-//   } else if (state === `diary`){
-//     diary();
+//   } else if (state === `secret`){
+//     secret();
 //     // secretGuardian();
 //   }
 // }

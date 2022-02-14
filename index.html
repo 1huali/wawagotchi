@@ -42,13 +42,13 @@
     </h1>
   </h2>
   <div id = "theService">
-      hello how can we help you today? maybe an alert here could work
-      <br> - forgot how to Change the box's elements
-    <br>  - where do I put the attributes? in css? does it needs it own class?
-    <br> - add a box for koko's thoughts
-    <br>  - add box for randomized animal's description - eventually have a customized version
-    <br>  -
+    <form>
+      The service : hello, got some secrets to protect?
+    <br>    <label for="inputName">Guardian Name:</label>  <input type="text" id="inputName" name="iName"><br><br>
+    <br>    <label for="inputPassword">Password:</label>  <input type="text" id="inputPassword" name="iPw"><br><br>
+      <input type="submit" value="Submit">
     <br> -
+  </form>
       </div>
 <h1>  <marquee border="0" bgcolor scrolldelay="60" width="90%" scrollamount="4">♥ WELCOME AND TAKE CARE ♥</marquee>            </h1>
 </div>
@@ -89,7 +89,6 @@
         <div class="box" id="hungerBox"> <h2 id='hungerText'></h2>
         <div id ='hungerLilhearts'></div>
         </div>
-        <button style="margin-left:5px" id="helloButton">Hello!</button>
       </div>
       <!-- varBoxes/ -->
 
@@ -100,23 +99,26 @@
 
       </div>
 
-      <!-- /Buttons -->
-
-      <div class="varBoxes">
-        <button id="eatButton">Eat (5c)</button>
-        <button style="margin-left:5px" id="washButton">Wash</button>
-        <button style="margin-left:5px" id="playButton">Play (5c)</button>
-        <button style="margin-left:5px" id="newKokoButton">New Fit</button>
-          <button style="margin-left:5px" id="meditateButton">Meditate</button>
-          <button style="margin-left:5px" id="newRoom">Change Room</button>
-
-    </div>
 
       <!-- Buttons/ -->
-<!-- still doesnt work properly -->
-</div>
+</div><!-- PetZone/ -->
 </div><!-- PetShop/ -->
-</div><!-- outerBox -->
+<div id="rightSideBox">
+<div id="secretsBox">secrets here</div> <!-- secretBox/ -->
+</div> <!-- rightSideBox ends -->
+</div> <!-- outerBox -->
+<!-- /Buttons -->
+
+<div class="varBoxes">
+  <button id="eatButton">Eat (5c)</button>
+  <button style="margin-left:5px" id="washButton">Wash</button>
+  <button style="margin-left:5px" id="playButton">Play (5c)</button>
+  <button style="margin-left:5px" id="newKokoButton">New Fit</button>
+    <button style="margin-left:5px" id="meditateButton">Meditate</button>
+    <button style="margin-left:5px" id="newRoom">Change Room</button>
+    <button style="margin-left:5px" id="helloButton">Hello!</button>
+
+</div>
   </div>
   <!-- ParentBox/ -->
 
