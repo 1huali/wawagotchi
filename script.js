@@ -2,6 +2,9 @@ let name = "koko";
 let birth = undefined;
 let sign = undefined;
 
+//profileBox
+let infos;
+
 //states
 let state = `intro`;
 
@@ -60,7 +63,10 @@ function setup() {
   if (localStorage.getItem(`guardianData`) === null) {
     setGuardianProfile();
     passedVerification = true;
+  } else {
+     testGuardianName();
   }
+
   if (annyang) {
     let commands = {
       'I promise': function() {
@@ -91,51 +97,51 @@ function setGuardianProfile() {
   characteristic.element = random(animal.Element);
   characteristic.animalColor = animalColor.name;
   characteristic.secret = "";
-  characteristic.password = prompt(`PET SHOP SERVICE: Set a password you for eventual authentification.`)
+  characteristic.password = prompt(`PET SHOP SERVICE: Set a password that you will remember for eventual authentifications.`)
   localStorage.setItem(`guardianData`, JSON.stringify(characteristic));
   guardianProfile = characteristic;
   console.log(guardianProfile);
-displayGuardianInstructions();
   //call the tamagotchi state;
   tamagotchi();
 }
 
 function displayGuardianInstructions() {
-  if (passedVerification) {
-    let guardian = `Hi, here is the guardian keeper of your secrets.
-Name: ${guardianProfile.name}
-Form : ${guardianProfile.animal}
-Type : ${guardianProfile.type}
-Features : ${guardianProfile.features}
-Texture : ${guardianProfile.texture}
-Element: ${guardianProfile.element}
-Color : ${guardianProfile.animalColor}
-Will you take care of me forever?
-Say you promise and your secrets will be safe with ${guardianProfile.name}.`;
-
-    if (animalResponse === true) {
-      console.log(animalResponse);
-      // Q: why animal only plays when mousePressed? and why it has to be in draw cos the music is glitchy
-      animalEcho.play();
-      animalResponse = false;
-      secretExposed = true;
-      setTimeout(function() {
-        hideSecret = true;
-      }, 3000)
-    }
-
-    if (secretExposed === true) {
-      displaySecret();
-    }
-    push();
-    textSize(10);
-    textAlign(TOP, LEFT);
-    fill(0);
-    text(guardian, 10, 100);
-    pop();
-  } else {
-    testGuardianName();
-  }
+//   if (passedVerification) {
+console.log(guardianProfile);
+    profileBox.innerHTML = `<h2>Hi, here is the guardian keeper of your secrets.</h2>`;
+profileBox.innerHTML += `<h2> Name: ${guardianProfile.name} </h2>`;
+profileBox.innerHTML += `<h2> Form : ${guardianProfile.animal}</h2>`;
+profileBox.innerHTML += `<h2> Type : ${guardianProfile.type}</h2>`;
+profileBox.innerHTML += `<h2> Features : ${guardianProfile.features}</h2>`;
+profileBox.innerHTML += `<h2> Texture : ${guardianProfile.texture}</h2>`;
+profileBox.innerHTML += `<h2> Element: ${guardianProfile.element}</h2>`;
+profileBox.innerHTML += `<h2> Color : ${guardianProfile.animalColor}</h2>`;
+profileBox.innerHTML += `<h2> Will you take care of me forever?</h2>`;
+profileBox.innerHTML += `<h2> Say you promise and your secrets will be safe with ${guardianProfile.name}. </h2>`;
+//
+//     if (animalResponse === true) {
+//       console.log(animalResponse);
+//       // Q: why animal only plays when mousePressed? and why it has to be in draw cos the music is glitchy
+//       animalEcho.play();
+//       animalResponse = false;
+//       secretExposed = true;
+//       setTimeout(function() {
+//         hideSecret = true;
+//       }, 3000)
+//     }
+//
+//     if (secretExposed === true) {
+//       displaySecret();
+//     }
+//     push();
+//     textSize(10);
+//     textAlign(TOP, LEFT);
+//     fill(0);
+//     text(guardian, 10, 100);
+//     pop();
+//   } else {
+//     testGuardianName();
+//   }
 }
 
 function tellMeUrSecret() {
@@ -159,7 +165,7 @@ function testGuardianName() {
 
   if (testName === guardianProfile.name) {
     console.log(guardianProfile);
-    passedVerification = true;
+    tamagotchi();
   } else {
     passedVerification = false;
   }
@@ -190,6 +196,7 @@ function displaySecret() {
 }
 
 function tamagotchi() {
+  displayGuardianInstructions();
   document.getElementById('parentBox').style.display = 'block';
   document.getElementById('introBox').style.display = 'none';
   state = `tamagotchi`;
@@ -210,6 +217,7 @@ function tamagotchi() {
   let moodText = document.getElementById('moodText');
   let pet = document.getElementById('pet');
   let hungerBox = document.getElementById('hungerBox');
+  let profileBox = document.getElementById('profileBox');
 
   let weatherVar = document.getElementById('rain');
   let weatherShowing = false;
@@ -285,6 +293,7 @@ function tamagotchi() {
   coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
   moodText.innerHTML = `MOOD: `;
   hungerText.innerHTML = `BELLY: `;
+
 
   // why creating hearts here and at line 103?
   for (let i = 0; i < moodLevel; i++) {

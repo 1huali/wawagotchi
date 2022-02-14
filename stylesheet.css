@@ -186,7 +186,7 @@ h2 {
 }*/
 #petShop{
   background: rgba(255, 255, 255, 0.5);
-  margin-left:30%;
+/*  margin-left:30%;*/
   width:40%;
 }
 
@@ -204,6 +204,23 @@ h2 {
   margin-left: 10vw;
   width:80vw;
 }
+#outerBox{
+  display:flex;
+}
+#infoBox{
+margin-left: 30px;
+background-color: #000000;
+color:#FFFFFF;
+  width:40%;
+}
+#infoBox h2{
+  color:#FFFFFF;
+}
+
+#animalThoughtsBox h2{
+  color:#FFFFFF;
+}
+
 /*LINK ESTHETIC*/
 /* unvisited link */
 a:link {
