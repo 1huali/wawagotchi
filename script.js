@@ -57,16 +57,10 @@ function setup() {
   //tamagotchi();
   //secret();
   console.log(state);
-  localStorage.removeItem('guardianData');
+  // localStorage.removeItem('guardianData');
 
 
-  //set the guardian or generates one
-  if (localStorage.getItem(`guardianData`) === null) {
-    setGuardianProfile();
-    passedVerification = true;
-  } else {
-     testGuardianName();
-  }
+
 
   if (annyang) {
     let commands = {
@@ -91,13 +85,21 @@ function setup() {
 
 function setGuardianProfile() {
 
+  document.getElementById('introBox').style.display = 'block';
+  document.getElementById("dataInputGuardian").addEventListener("click",function()
+  {
+    //stop input button from reloading the page
+    event.preventDefault();
+    console.log(document.getElementById("inputName").value);
+    console.log(document.getElementById("inputPassword").value);
+
   let animal = random(formData.animals);
   let animalFeature = random(formData.animals);
   let animalColor = random(colorData.animalColors);
   let animalForm = random(animalData);
   let animalTexture = random(formData.animals);
 
-  characteristic.name = inputName;
+  characteristic.name = document.getElementById("inputName").value;
   // characteristic.name = prompt(`PET SHOP SERVICE: Hi. Choose a name for your new guardian.`);
   characteristic.animal = random(animalData.animals);
   characteristic.type = random(animal.Type);
@@ -107,13 +109,14 @@ function setGuardianProfile() {
   characteristic.element = random(animal.Element);
   characteristic.animalColor = animalColor.name;
   characteristic.secret = "";
-  characteristic.password = inputPassword;
+  characteristic.password = document.getElementById("inputPassword").value;
   // characteristic.password = prompt(`PET SHOP SERVICE: Set a password that you will remember for eventual authentifications.`)
   localStorage.setItem(`guardianData`, JSON.stringify(characteristic));
   guardianProfile = characteristic;
   console.log(guardianProfile);
   //call the tamagotchi state;
   tamagotchi();
+})
 }
 
 function displayGuardianInstructions() {
@@ -155,8 +158,16 @@ function tellMeUrSecret() {
 
 //activates the intro layout
 function intro() {
-  //  document.getElementById('introBox').style.display = 'none';
+  document.getElementById('introBox').style.display = 'none';
   document.getElementById('parentBox').style.display = 'none';
+
+  //set the guardian or generates one
+  if (localStorage.getItem(`guardianData`) === null) {
+    setGuardianProfile();
+    //passedVerification = true;
+  } else {
+     testGuardianName();
+  }
 }
 
 //authentification thru password when the user is coming back
