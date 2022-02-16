@@ -59,7 +59,7 @@ function setup() {
   //tamagotchi();
   //secret();
   console.log(state);
-  localStorage.removeItem('guardianData');
+  // localStorage.removeItem('guardianData');
 
   if (annyang) {
     let commands = {
@@ -95,7 +95,6 @@ function setGuardianProfile() {
 //guardian profile's characteristic generation
     let animal = random(formData.animals);
     let animalFeature = random(formData.animals);
-    //let animalColor = random(colorData.animalColors);
     let animalColor  = colorData.animalColors[0];
     let animalForm = random(animalData);
     let animalTexture = random(formData.animals);
@@ -108,7 +107,6 @@ function setGuardianProfile() {
     characteristic.features = random(animalFeature.Form);
     characteristic.texture = random(animalFeature.Texture);
     characteristic.element = random(animal.Element);
-    //  characteristic.animalColor = animalColor.name;
     characteristic.animalColor = animalColor.color;
     characteristic.secret = "";
     characteristic.password = document.getElementById("inputPassword").value;
@@ -126,13 +124,13 @@ function displayGuardianInstructions() {
   //   if (passedVerification) {
   console.log(guardianProfile);
   profileBox.innerHTML = `<h2>Hi, here is the guardian keeper of your secrets.</h2>`;
-  profileBox.innerHTML += `<h2> Name: ${guardianProfile.name} </h2>`;
+  // profileBox.innerHTML += `<h2> Name: ${guardianProfile.name} </h2>`;
   profileBox.innerHTML += `<h2> Form : ${guardianProfile.animal}</h2>`;
   profileBox.innerHTML += `<h2> Type : ${guardianProfile.type}</h2>`;
   profileBox.innerHTML += `<h2> Features : ${guardianProfile.features}</h2>`;
   profileBox.innerHTML += `<h2> Texture : ${guardianProfile.texture}</h2>`;
-  profileBox.innerHTML += `<h2> Element: ${guardianProfile.element}</h2>`;
-  profileBox.innerHTML += `<h2> Color : ${guardianProfile.animalColor}</h2>`;
+  // profileBox.innerHTML += `<h2> Element: ${guardianProfile.element}</h2>`;
+  profileBox.innerHTML += `<h2> Color : ${guardianProfile.animalColor.name}</h2>`;
   profileBox.innerHTML += `<h2> Will you take care of me forever?</h2>`;
   profileBox.innerHTML += `<h2> Say you promise and your secrets will be safe with ${guardianProfile.name}. </h2>`;
   //
@@ -229,7 +227,7 @@ function testGuardianName() {
         let randomIndex = Math.floor(Math.random()*thoughtsList.thoughts.length);
         console.log(randomIndex);
       displayGuardiansThoughts(randomIndex);
-    }, 2000);
+    }, 6000);
 
     document.getElementById('parentBox').style.display = 'block';
     document.getElementById('introBox').style.display = 'none';
