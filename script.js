@@ -2,20 +2,20 @@ let name = "koko";
 let birth = undefined;
 let sign = undefined;
 
-//guardian's Box
-// let thoughtsList= [];
-// let thoughts;
 
-//states
+//initial state
 let state = `intro`;
 
-
+//json files storage variables
 let animalData = `undefined`;
 let colorData = `undefined`;
 let animalColor = `undefined`;
 let formData = `undefined`;
+let thoughtsList= `undefined`;
+
 let animal = `undefined`;
 let nameOfGuardian = `undefined`;
+
 
 let animalResponse = false;
 let secretData = undefined;
@@ -49,10 +49,12 @@ function preload() {
   colorData = loadJSON(`Colors.json`);
   //https://raw.githubusercontent.com/dariusk/corpora/master/data/colors/wikipedia.json
   animalEcho = loadSound(`Preloads/Sounds/bark.wav`);
+thoughtsList = loadJSON(`Thoughts.json`);
 
 }
 
 function setup() {
+  //initialization of starting state
   intro();
   //tamagotchi();
   //secret();
@@ -90,6 +92,7 @@ function setGuardianProfile() {
     console.log(document.getElementById("inputName").value);
     console.log(document.getElementById("inputPassword").value);
 
+//guardian profile's characteristic generation
     let animal = random(formData.animals);
     let animalFeature = random(formData.animals);
     //let animalColor = random(colorData.animalColors);
@@ -113,6 +116,7 @@ function setGuardianProfile() {
     localStorage.setItem(`guardianData`, JSON.stringify(characteristic));
     guardianProfile = characteristic;
     console.log(guardianProfile);
+
     //call the tamagotchi state;
    tamagotchi();
   })
@@ -144,8 +148,8 @@ function displayGuardianInstructions() {
   }
 }
 
-function displayGuardiansThoughts() {
-  animalThoughtsBox.innerHTML += `<h2> hey U its me ${guardianProfile.name} </h2>`;
+function displayGuardiansThoughts(thoughtIndex) {
+  animalThoughtsBox.innerHTML = `<h2> ${thoughtsList.thoughts[thoughtIndex]} </h2>`;
 }
 
 // adds new secret to the array
@@ -214,18 +218,26 @@ function testGuardianName() {
     }
   }
 
+// tamagotchi state
   function tamagotchi() {
     displayGuardianInstructions();
-    displayGuardiansThoughts();
+    state = `tamagotchi`;
+
+    //guardian's thoughts box generating random strings
+      setInterval(function(){
+        //turn list element into a number
+        let randomIndex = Math.floor(Math.random()*thoughtsList.thoughts.length);
+        console.log(randomIndex);
+      displayGuardiansThoughts(randomIndex);
+    }, 2000);
+
     document.getElementById('parentBox').style.display = 'block';
     document.getElementById('introBox').style.display = 'none';
     document.getElementById('secretsBox').style.display = 'none';
     //set koko image
     document.getElementById("pet").src = guardianProfile.animalColor;
-    state = `tamagotchi`;
-    console.log(state);
-    // window.onload = function() {
 
+// variables to store characteristic data
     let dt = new Date();
     // load boxes
     let nameBox = document.getElementById('nameBox');

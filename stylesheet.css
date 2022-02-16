@@ -236,6 +236,17 @@ background-color: #000000;
   color:#FFFFFF;
 }
 
+#characteristics{
+  display: flex;
+}
+
+.vl {
+  /* border-left: 6px solid green; */
+  border-right: 1px solid black;
+  height: 22px;
+  padding: 3px;
+}
+
 /*LINK ESTHETIC*/
 /* unvisited link */
 a:link {
