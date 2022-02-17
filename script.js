@@ -3,9 +3,9 @@ let birth = undefined;
 let sign = undefined;
 let pet = undefined;
 let generatedColor= undefined;
-let currentFit;
+// let currentFit;
 let generatedOutfit;
-let outfits = [];
+// let outfits = [];
 
 //initial state
 let state = `intro`;
@@ -66,7 +66,7 @@ function setup() {
   //tamagotchi();
   //secret();
   console.log(state);
-  localStorage.removeItem('guardianData');
+  // localStorage.removeItem('guardianData');
 
   if (annyang) {
     let commands = {
@@ -103,8 +103,6 @@ function setGuardianProfile() {
 generatedColor= Math.random()* 360;
 pet.style.filter = `hue-rotate( ${generatedColor}deg)`;
 
-generatedOutfit = pet.src;
-generatedOutfit = outfits[0];
 
 //storing json files to characteristic
     let animal = random(characteristicData.animals);
@@ -123,7 +121,7 @@ generatedOutfit = outfits[0];
     characteristic.texture = random(animalFeature.Texture);
     characteristic.element = random(animal.Element);
     characteristic.color = generatedColor;
-    characteristic.outfit = generatedOutfit;
+    // characteristic.outfit = generatedOutfit;
     characteristic.secret = "";
     characteristic.password = document.getElementById("inputPassword").value;
     localStorage.setItem(`guardianData`, JSON.stringify(characteristic));
@@ -218,7 +216,7 @@ function testGuardianName() {
 
     }) //anon function
 
-  }//testGuardianName
+  } //testGuardianName
 
   //secrets appear in their zone
   function displaySecret() {
@@ -321,11 +319,14 @@ function testGuardianName() {
     showerSoundtrack = document.getElementById('showerSoundtrack');
     ilySoundtrack = document.getElementById('ilySoundtrack');
 
-    // let outfits = [];
-    // currentFit = 0;
-    outfits[0] = generatedOutfit;
+
+    let outfits = [];
+    currentFit = 0;
+    outfits[0] = "Preloads/Images/cat_red-peach.gif";
     outfits[1] = "Preloads/Images/cat_lucky-black.gif";
-    outfits[2] = "Preloads/Images/cat_snow-silver.gif";
+    outfits[3] = "Preloads/Images/cat_snow-silver.gif";
+// outfit 0 after one loop breaks
+
 
 
     room = document.getElementById('room');
@@ -361,7 +362,6 @@ function testGuardianName() {
 
 
     // functions
-
     // animal change outfit
     changeFitButton.addEventListener("click", changeFit);
 
@@ -369,10 +369,8 @@ function testGuardianName() {
       if (currentFit >= outfits.length - 1) {
         currentFit = 0;
         pet.src = fits[currentFit]
-
       } else {
         currentFit = currentFit + 1;
-
         pet.src = outfits[currentFit]
       }
     }
@@ -387,16 +385,6 @@ function testGuardianName() {
       }, 1000);
     }
     console.log("weather changing");
-
-    // attempt2
-    // setTimeout(function() {
-    // weatherVar.style.display= "block";
-    //   setTimeout(returnUsualWeather, 9000)
-    // })
-    // function returnUsualWeather() {
-    // weatherVar.style.display= "none";
-    // }
-    // }
 
     // eat and hunger
     setInterval(hungerUpdate, 20000);
