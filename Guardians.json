@@ -16,7 +16,7 @@
         },
         {
           "Type": ["Carnivore"],
-          "Nature": ["Paws", "Fur"],
+          "Nature": ["Clumsy", "Sad"],
           "Texture": ["Furr", "Skin-like"],
           "Element": ["Earth"]
         },

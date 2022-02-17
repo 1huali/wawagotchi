@@ -3,13 +3,16 @@ let birth = undefined;
 let sign = undefined;
 let pet = undefined;
 let generatedColor= undefined;
+let currentFit;
+let generatedOutfit;
+let outfits = [];
 
 //initial state
 let state = `intro`;
 
 //json files storage variables
-let animalData = `undefined`;
-let colorData = `undefined`;
+// let animalData = `undefined`;
+// let colorData = `undefined`;
 let animalColor = `undefined`;
 let characteristicData = `undefined`;
 let thoughtsList= `undefined`;
@@ -33,7 +36,8 @@ let characteristic = {
   name: `tbd`,
   nature: `tbd`,
   texture: `tbd`,
-  // animalColor: `tbd`,
+  outfit:`tbd`,
+  color: `tbd`,
   animal: `tbd`,
   secret: `tbd`,
   password: `tbd`
@@ -62,7 +66,7 @@ function setup() {
   //tamagotchi();
   //secret();
   console.log(state);
-  // localStorage.removeItem('guardianData');
+  localStorage.removeItem('guardianData');
 
   if (annyang) {
     let commands = {
@@ -96,8 +100,11 @@ function setGuardianProfile() {
     console.log(document.getElementById("inputPassword").value);
 
 //generation of pet color
-// how can I store this koko N make it currentFit
-pet.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
+generatedColor= Math.random()* 360;
+pet.style.filter = `hue-rotate( ${generatedColor}deg)`;
+
+generatedOutfit = pet.src;
+generatedOutfit = outfits[0];
 
 //storing json files to characteristic
     let animal = random(characteristicData.animals);
@@ -106,9 +113,8 @@ pet.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
     let animalForm = random(animalData);
     let animalTexture = random(characteristicData.animals);
 
-//guardian profile's characteristic generation
+//guardian profile's characteristic generation and saving
     characteristic.name = document.getElementById("inputName").value;
-    // characteristic.name = prompt(`PET SHOP SERVICE: Hi. Choose a name for your new guardian.`);
     characteristic.animal = random(animalData.animals);
     characteristic.type = random(animal.Type);
     characteristic.form = animalForm;
@@ -116,7 +122,8 @@ pet.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
     console.log(animalFeature.Nature);
     characteristic.texture = random(animalFeature.Texture);
     characteristic.element = random(animal.Element);
-    // characteristic.animalColor = animalColor;
+    characteristic.color = generatedColor;
+    characteristic.outfit = generatedOutfit;
     characteristic.secret = "";
     characteristic.password = document.getElementById("inputPassword").value;
     localStorage.setItem(`guardianData`, JSON.stringify(characteristic));
@@ -133,9 +140,9 @@ function displayGuardianInstructions() {
   console.log(guardianProfile);
   profileBox.innerHTML = `<h2>Hi, here is the guardian keeper of your secrets.</h2>`;
   // profileBox.innerHTML += `<h2> Name: ${guardianProfile.name} </h2>`;
-  profileBox.innerHTML += `<h2> Form : ${guardianProfile.animal}</h2>`;
+  profileBox.innerHTML += `<h2> Metaphysical form : ${guardianProfile.animal}</h2>`;
   profileBox.innerHTML += `<h2> Type : ${guardianProfile.type}</h2>`;
-  profileBox.innerHTML += `<h2> Nature : ${guardianProfile.Nature}</h2>`;
+  profileBox.innerHTML += `<h2> Nature : ${guardianProfile.nature}</h2>`;
   profileBox.innerHTML += `<h2> Texture : ${guardianProfile.texture}</h2>`;
   // profileBox.innerHTML += `<h2> Element: ${guardianProfile.element}</h2>`;
   // profileBox.innerHTML += `<h2> Color : ${guardianProfile.animalColor.name}</h2>`;
@@ -314,11 +321,11 @@ function testGuardianName() {
     showerSoundtrack = document.getElementById('showerSoundtrack');
     ilySoundtrack = document.getElementById('ilySoundtrack');
 
-    let fits = [];
-    let currentFit = 0;
-    // fits[0] = generatedColor;
-    fits[0] = "Preloads/Images/cat_lucky-black.gif";
-    fits[1] = "Preloads/Images/cat_snow-silver.gif";
+    // let outfits = [];
+    // currentFit = 0;
+    outfits[0] = generatedOutfit;
+    outfits[1] = "Preloads/Images/cat_lucky-black.gif";
+    outfits[2] = "Preloads/Images/cat_snow-silver.gif";
 
 
     room = document.getElementById('room');
@@ -359,14 +366,14 @@ function testGuardianName() {
     changeFitButton.addEventListener("click", changeFit);
 
     function changeFit() {
-      if (currentFit >= fits.length - 1) {
+      if (currentFit >= outfits.length - 1) {
         currentFit = 0;
         pet.src = fits[currentFit]
 
       } else {
         currentFit = currentFit + 1;
 
-        pet.src = fits[currentFit]
+        pet.src = outfits[currentFit]
       }
     }
 
