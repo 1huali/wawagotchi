@@ -1,0 +1,36 @@
+
+  {
+    "description":  "Animals and few characteritics. Yall uniquexs",
+    "animals": [
+        {
+          "Type": ["Piscivore"],
+          "Nature": ["Dreamy", "Hot-tempered", "Smart"],
+          "Texture": ["Feather"],
+           "Element": ["Air"]
+        },
+        {
+          "Type": ["Herbivore"],
+          "Nature": ["Clueless", "Caring", "Careless", "Anxious"],
+          "Texture": ["Scales"],
+          "Element": ["Water"]
+        },
+        {
+          "Type": ["Carnivore"],
+          "Nature": ["Paws", "Fur"],
+          "Texture": ["Furr", "Skin-like"],
+          "Element": ["Earth"]
+        },
+        {
+          "Type": ["Carnivore"],
+          "Nature": ["Sensitive", "Friendly", "Patient"],
+          "Texture": ["Furr", "Skin-like"],
+          "Element": ["Fire"]
+        },
+        {
+          "Type": ["Carnivore"],
+          "Nature": ["Impatient", "Goofy", "Cocky"],
+          "Texture": ["Furr", "Skin-like"],
+          "Element": ["Metal"]
+        }
+        ]
+  }

@@ -1,7 +1,7 @@
 let name = "koko";
 let birth = undefined;
 let sign = undefined;
-
+let pet = undefined;
 
 //initial state
 let state = `intro`;
@@ -10,7 +10,7 @@ let state = `intro`;
 let animalData = `undefined`;
 let colorData = `undefined`;
 let animalColor = `undefined`;
-let formData = `undefined`;
+let characteristicData = `undefined`;
 let thoughtsList= `undefined`;
 
 let animal = `undefined`;
@@ -30,13 +30,14 @@ let characteristic = {
   form: `tbd`,
   element: `tbd`,
   name: `tbd`,
-  features: `tbd`,
+  nature: `tbd`,
   texture: `tbd`,
-  animalColor: `tbd`,
+  // animalColor: `tbd`,
   animal: `tbd`,
   secret: `tbd`,
   password: `tbd`
 }
+
 let guardianProfile = null;
 let passedVerification = false;
 
@@ -45,8 +46,8 @@ loads the json lists
 */
 function preload() {
   animalData = loadJSON(`https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/common.json`);
-  formData = loadJSON(`Form.json`);
-  colorData = loadJSON(`Colors.json`);
+  characteristicData = loadJSON(`Guardians.json`);
+  // colorData = loadJSON(`Colors.json`);
   //https://raw.githubusercontent.com/dariusk/corpora/master/data/colors/wikipedia.json
   animalEcho = loadSound(`Preloads/Sounds/bark.wav`);
 thoughtsList = loadJSON(`Thoughts.json`);
@@ -77,7 +78,7 @@ function setup() {
       }
     };
     annyang.addCommands(commands);
-    annyang.start();
+    // annyang.start();
   }
 }
 
@@ -93,24 +94,24 @@ function setGuardianProfile() {
     console.log(document.getElementById("inputPassword").value);
 
 //guardian profile's characteristic generation
-    let animal = random(formData.animals);
-    let animalFeature = random(formData.animals);
-    let animalColor  = colorData.animalColors[0];
+    let animal = random(characteristicData.animals);
+    let animalFeature = random(characteristicData.animals);
+    // let animalColor  = colorData.animalColors[0];
     let animalForm = random(animalData);
-    let animalTexture = random(formData.animals);
+    let animalTexture = random(characteristicData.animals);
 
     characteristic.name = document.getElementById("inputName").value;
     // characteristic.name = prompt(`PET SHOP SERVICE: Hi. Choose a name for your new guardian.`);
     characteristic.animal = random(animalData.animals);
     characteristic.type = random(animal.Type);
     characteristic.form = animalForm;
-    characteristic.features = random(animalFeature.Form);
+    characteristic.nature = random(animalFeature.Nature);
+    console.log(animalFeature.Nature);
     characteristic.texture = random(animalFeature.Texture);
     characteristic.element = random(animal.Element);
-    characteristic.animalColor = animalColor.color;
+    // characteristic.animalColor = animalColor;
     characteristic.secret = "";
     characteristic.password = document.getElementById("inputPassword").value;
-    // characteristic.password = prompt(`PET SHOP SERVICE: Set a password that you will remember for eventual authentifications.`)
     localStorage.setItem(`guardianData`, JSON.stringify(characteristic));
     guardianProfile = characteristic;
     console.log(guardianProfile);
@@ -127,10 +128,10 @@ function displayGuardianInstructions() {
   // profileBox.innerHTML += `<h2> Name: ${guardianProfile.name} </h2>`;
   profileBox.innerHTML += `<h2> Form : ${guardianProfile.animal}</h2>`;
   profileBox.innerHTML += `<h2> Type : ${guardianProfile.type}</h2>`;
-  profileBox.innerHTML += `<h2> Features : ${guardianProfile.features}</h2>`;
+  profileBox.innerHTML += `<h2> Nature : ${guardianProfile.Nature}</h2>`;
   profileBox.innerHTML += `<h2> Texture : ${guardianProfile.texture}</h2>`;
   // profileBox.innerHTML += `<h2> Element: ${guardianProfile.element}</h2>`;
-  profileBox.innerHTML += `<h2> Color : ${guardianProfile.animalColor.name}</h2>`;
+  // profileBox.innerHTML += `<h2> Color : ${guardianProfile.animalColor.name}</h2>`;
   profileBox.innerHTML += `<h2> Will you take care of me forever?</h2>`;
   profileBox.innerHTML += `<h2> Say you promise and your secrets will be safe with ${guardianProfile.name}. </h2>`;
   //
@@ -182,7 +183,6 @@ function testGuardianName() {
       //stop input button from reloading the page
       event.preventDefault();
 
-      // let testName = prompt(`PET SHOP SERVICE: Welcome back. Your guardian's name please?`);
       guardianProfile = JSON.parse(localStorage.getItem(`guardianData`));
 
       let passwordEntry= document.getElementById("inputPasswordReturn").value;
@@ -232,8 +232,7 @@ function testGuardianName() {
     document.getElementById('parentBox').style.display = 'block';
     document.getElementById('introBox').style.display = 'none';
     document.getElementById('secretsBox').style.display = 'none';
-    //set koko image
-    document.getElementById("pet").src = guardianProfile.animalColor;
+
 
 // variables to store characteristic data
     let dt = new Date();
@@ -248,7 +247,7 @@ function testGuardianName() {
     let coinsBox = document.getElementById('coinsBox');
     let moodBox = document.getElementById('moodBox');
     let moodText = document.getElementById('moodText');
-    let pet = document.getElementById('pet');
+    pet = document.getElementById('pet');
     let hungerBox = document.getElementById('hungerBox');
     let profileBox = document.getElementById('profileBox');
     let animalThoughtsBox = document.getElementById('animalThoughtsBox');
@@ -311,8 +310,8 @@ function testGuardianName() {
 
     let fits = [];
     let currentFit = 0;
-    fits[0] = "Preloads/Images/output-onlinegiftools.gif";
-    fits[1] = "Preloads/Images/1output-onlinegiftools.gif";
+    fits[0] = "Preloads/Images/cat_lucky-black.gif";
+    fits[1] = "Preloads/Images/cat_snow-silver.gif";
 
     room = document.getElementById('room');
     ramenRoom = document.getElementById('dinnerBackground');
