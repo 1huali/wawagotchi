@@ -2,6 +2,7 @@ let name = "koko";
 let birth = undefined;
 let sign = undefined;
 let pet = undefined;
+let generatedColor= undefined;
 
 //initial state
 let state = `intro`;
@@ -51,6 +52,7 @@ function preload() {
   //https://raw.githubusercontent.com/dariusk/corpora/master/data/colors/wikipedia.json
   animalEcho = loadSound(`Preloads/Sounds/bark.wav`);
 thoughtsList = loadJSON(`Thoughts.json`);
+pet = document.getElementById('pet');
 
 }
 
@@ -84,22 +86,27 @@ function setup() {
 
 
 function setGuardianProfile() {
-
   document.getElementById('introBox').style.display = 'block';
   document.getElementById('returning').style.display = 'none';
   document.getElementById("dataInputGuardian").addEventListener("click", function() {
+
     //stop input button from reloading the page
     event.preventDefault();
     console.log(document.getElementById("inputName").value);
     console.log(document.getElementById("inputPassword").value);
 
-//guardian profile's characteristic generation
+//generation of pet color
+// how can I store this koko N make it currentFit
+pet.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
+
+//storing json files to characteristic
     let animal = random(characteristicData.animals);
     let animalFeature = random(characteristicData.animals);
     // let animalColor  = colorData.animalColors[0];
     let animalForm = random(animalData);
     let animalTexture = random(characteristicData.animals);
 
+//guardian profile's characteristic generation
     characteristic.name = document.getElementById("inputName").value;
     // characteristic.name = prompt(`PET SHOP SERVICE: Hi. Choose a name for your new guardian.`);
     characteristic.animal = random(animalData.animals);
@@ -247,7 +254,6 @@ function testGuardianName() {
     let coinsBox = document.getElementById('coinsBox');
     let moodBox = document.getElementById('moodBox');
     let moodText = document.getElementById('moodText');
-    pet = document.getElementById('pet');
     let hungerBox = document.getElementById('hungerBox');
     let profileBox = document.getElementById('profileBox');
     let animalThoughtsBox = document.getElementById('animalThoughtsBox');
@@ -310,8 +316,10 @@ function testGuardianName() {
 
     let fits = [];
     let currentFit = 0;
+    // fits[0] = generatedColor;
     fits[0] = "Preloads/Images/cat_lucky-black.gif";
     fits[1] = "Preloads/Images/cat_snow-silver.gif";
+
 
     room = document.getElementById('room');
     ramenRoom = document.getElementById('dinnerBackground');
