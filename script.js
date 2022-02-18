@@ -132,6 +132,7 @@ pet.style.filter = `hue-rotate( ${generatedColor}deg)`;
     console.log(guardianProfile);
 
     //call the tamagotchi state;
+    dailyMood();
    tamagotchi();
   })
 }
