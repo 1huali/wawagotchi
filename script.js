@@ -6,7 +6,7 @@ let generatedColor= undefined;
 // let currentFit;
 let generatedOutfit;
 // let outfits = [];
-
+let moodList= undefined;
 //initial state
 let state = `intro`;
 
@@ -40,7 +40,8 @@ let characteristic = {
   color: `tbd`,
   animal: `tbd`,
   secret: `tbd`,
-  password: `tbd`
+  password: `tbd`,
+  mood:`tbd`
 }
 
 let guardianProfile = null;
@@ -56,7 +57,7 @@ function preload() {
   //https://raw.githubusercontent.com/dariusk/corpora/master/data/colors/wikipedia.json
   animalEcho = loadSound(`Preloads/Sounds/bark.wav`);
 thoughtsList = loadJSON(`Thoughts.json`);
-pet = document.getElementById('pet');
+moodList = loadJSON(`Moods.json`);
 
 }
 
@@ -66,7 +67,7 @@ function setup() {
   //tamagotchi();
   //secret();
   console.log(state);
-  // localStorage.removeItem('guardianData');
+  localStorage.removeItem('guardianData');
 
   if (annyang) {
     let commands = {
@@ -86,6 +87,8 @@ function setup() {
     annyang.addCommands(commands);
     // annyang.start();
   }
+  pet = document.getElementById('pet');
+
 }
 
 
@@ -131,6 +134,12 @@ pet.style.filter = `hue-rotate( ${generatedColor}deg)`;
     //call the tamagotchi state;
    tamagotchi();
   })
+}
+
+function dailyMood(){
+  //mood doesnt show
+  characteristic.mood= random(moodList.moods);
+  console.log(characteristic.mood);
 }
 
 function displayGuardianInstructions() {
@@ -324,8 +333,7 @@ function testGuardianName() {
     currentFit = 0;
     outfits[0] = "Preloads/Images/cat_red-peach.gif";
     outfits[1] = "Preloads/Images/cat_lucky-black.gif";
-    outfits[3] = "Preloads/Images/cat_snow-silver.gif";
-// outfit 0 after one loop breaks
+    outfits[2] = "Preloads/Images/cat_snow-silver.gif";
 
 
 
@@ -368,7 +376,7 @@ function testGuardianName() {
     function changeFit() {
       if (currentFit >= outfits.length - 1) {
         currentFit = 0;
-        pet.src = fits[currentFit]
+        pet.src = outfits[currentFit]
       } else {
         currentFit = currentFit + 1;
         pet.src = outfits[currentFit]
