@@ -25,9 +25,10 @@ let animalResponse = false;
 let secretData = undefined;
 let hideSecret = false;
 let secretExposed = false;
+let guardianReply = undefined;
 
 // let mood = `undefined`;
-let animalEcho = undefined;
+// let animalEcho = undefined;
 
 let characteristic = {
   type: `tbd`,
@@ -55,7 +56,7 @@ function preload() {
   characteristicData = loadJSON(`Guardians.json`);
   // colorData = loadJSON(`Colors.json`);
   //https://raw.githubusercontent.com/dariusk/corpora/master/data/colors/wikipedia.json
-  animalEcho = loadSound(`Preloads/Sounds/bark.wav`);
+  guardianReply = loadSound(`Preloads/Sounds/bark.wav`);
 thoughtsList = loadJSON(`Thoughts.json`);
 moodList = loadJSON(`Moods.json`);
 
@@ -64,9 +65,7 @@ moodList = loadJSON(`Moods.json`);
 function setup() {
   //initialization of starting state
   intro();
-  //tamagotchi();
-  //secret();
-  console.log(state);
+  // console.log(state);
   localStorage.removeItem('guardianData');
 
   if (annyang) {
@@ -75,17 +74,25 @@ function setup() {
         animalResponse = true;
         tellMeUrSecret();
       },
-      'show me': function() {
+      'show': function() {
         secretState();
         // console.log(annyang);
       },
       'hide': function() {
         document.getElementById('secretsBox').style.display = 'none';
         // console.log(annyang);
+      },
+      '*tag': function(tag) {
+        console.log(tag)
+        if (tag.toLowerCase() === characteristic.name.toLowerCase()){
+          animalResponse === true;
+          console.log(`oui?`)
+          // guardianReply.play();
+        }
       }
     };
     annyang.addCommands(commands);
-    // annyang.start();
+    annyang.start();
   }
   pet = document.getElementById('pet');
 
@@ -126,22 +133,24 @@ pet.style.filter = `hue-rotate( ${generatedColor}deg)`;
     characteristic.color = generatedColor;
     // characteristic.outfit = generatedOutfit;
     characteristic.secret = "";
+    characteristic.mood= random(moodList.moods);
     characteristic.password = document.getElementById("inputPassword").value;
     localStorage.setItem(`guardianData`, JSON.stringify(characteristic));
     guardianProfile = characteristic;
     console.log(guardianProfile);
 
     //call the tamagotchi state;
-    dailyMood();
+    // dailyMood();
    tamagotchi();
   })
 }
+//
+// function dailyMood(){
+//   //mood doesnt show
+//   characteristic.mood= random(moodList.moods);
+//   console.log(characteristic.mood);
+// }
 
-function dailyMood(){
-  //mood doesnt show
-  characteristic.mood= random(moodList.moods);
-  console.log(characteristic.mood);
-}
 
 function displayGuardianInstructions() {
   //   if (passedVerification) {
@@ -151,16 +160,18 @@ function displayGuardianInstructions() {
   profileBox.innerHTML += `<h2> Metaphysical form : ${guardianProfile.animal}</h2>`;
   profileBox.innerHTML += `<h2> Type : ${guardianProfile.type}</h2>`;
   profileBox.innerHTML += `<h2> Nature : ${guardianProfile.nature}</h2>`;
-  profileBox.innerHTML += `<h2> Texture : ${guardianProfile.texture}</h2>`;
+  profileBox.innerHTML += `<h2> Mood of the day : ${guardianProfile.mood}</h2>`;
   // profileBox.innerHTML += `<h2> Element: ${guardianProfile.element}</h2>`;
   // profileBox.innerHTML += `<h2> Color : ${guardianProfile.animalColor.name}</h2>`;
+  profileBox.innerHTML += `infos`;
   profileBox.innerHTML += `<h2> Will you take care of me forever?</h2>`;
   profileBox.innerHTML += `<h2> Say you promise and your secrets will be safe with ${guardianProfile.name}. </h2>`;
+  profileBox.innerHTML += `<h2>${guardianProfile.name}'s box *꧂</h2>`;
   //
   if (animalResponse === true) {
     console.log(animalResponse);
     // Q: why animal only plays when mousePressed? and why it has to be in draw cos the music is glitchy
-    // animalEcho.play();
+    guardianReply.play();
     animalResponse = false;
     secretExposed = true;
     setTimeout(function() {
@@ -208,20 +219,12 @@ function testGuardianName() {
       guardianProfile = JSON.parse(localStorage.getItem(`guardianData`));
 
       let passwordEntry= document.getElementById("inputPasswordReturn").value;
-      console.log(guardianProfile);
-      console.log(passwordEntry);
-      //let passwordEntry = prompt(`PET SHOP SERVICE: What is the password?`)
-      //
-      // if (testName === guardianProfile.name) {
-      //   console.log(guardianProfile);
-      //   tamagotchi();
-      // } else {
-      //   passedVerification = false;
-      // }
-      //
+      // console.log(guardianProfile);
+      // console.log(passwordEntry);
+
       if (passwordEntry === guardianProfile.password) {
        tamagotchi();
-      //console.log("success");
+      console.log("success");
       }
 
     }) //anon function
@@ -231,7 +234,8 @@ function testGuardianName() {
   //secrets appear in their zone
   function displaySecret() {
     if (hideSecret === false) {
-      secretsBox.innerHTML += `<h2> ${guardianProfile.secret} </h2>`;
+      let date= Date.now();
+      secretsBox.innerHTML += `<h2> ${guardianProfile.secret} , ${date} </h2>`;
       // hideSecret === true;
     } else {
       hideSecret === true;
