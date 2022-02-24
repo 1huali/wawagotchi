@@ -1,4 +1,3 @@
-// let name = "koko";
 let birth = undefined;
 let sign = undefined;
 let pet = undefined;
@@ -64,7 +63,7 @@ function setup() {
   //initialization of starting state
   intro();
   // console.log(state);
-  localStorage.removeItem('guardianData');
+  // localStorage.removeItem('guardianData');
 
   if (annyang) {
     let commands = {
@@ -87,18 +86,17 @@ function setup() {
           console.log(`oui?`)
           guardianReply.play();
         }},
-        'hello': function(tag) {
-          if (tag.toLowerCase() === characteristic.name.toLowerCase()){
+        'hello': function() {
             // animalResponse === true;
             console.log(`oui?`)
             guardianReply.play();
-          }},
-          'i love you': function(tag) {
-            console.log(tag)
-            if (tag.toLowerCase() === characteristic.name.toLowerCase()){
-              // guardianReply.play();
-            }
-      }
+          },
+      //     'i love you': function(tag) {
+      //       console.log(tag)
+      //       if (tag.toLowerCase() === characteristic.name.toLowerCase()){
+      //         // guardianReply.play();
+      //       }
+      // }
     };
     annyang.addCommands(commands);
     annyang.start();
@@ -169,13 +167,14 @@ function displayGuardianInstructions() {
   profileBox.innerHTML += `<h2> Metaphysical form : ${guardianProfile.animal}</h2>`;
   profileBox.innerHTML += `<h2> Type : ${guardianProfile.type}</h2>`;
   profileBox.innerHTML += `<h2> Nature : ${guardianProfile.nature}</h2>`;
-  profileBox.innerHTML += `<h2> Mood of the day : ${guardianProfile.mood}</h2>`;
   // profileBox.innerHTML += `<h2> Element: ${guardianProfile.element}</h2>`;
   // profileBox.innerHTML += `<h2> Color : ${guardianProfile.animalColor.name}</h2>`;
   profileBox.innerHTML += `infos`;
-  profileBox.innerHTML += `<h2> Will you take care of me forever?</h2>`;
-  profileBox.innerHTML += `<h2> Say you promise and your secrets will be safe with ${guardianProfile.name}. </h2>`;
-  profileBox.innerHTML += `<h2>${guardianProfile.name}'s box *꧂</h2>`;
+  profileBox.innerHTML += ``;
+  // profileBox.innerHTML += `<h2> Say you promise and your secrets will be safe with ${guardianProfile.name}. </h2>`;
+  // profileBox.innerHTML += `<h2>${guardianProfile.name}'s box *꧂</h2>`;
+  profileBox.innerHTML += `<h2> Mood of the day : ${guardianProfile.mood}</h2>`;
+
   //
   if (animalResponse === true) {
     console.log(animalResponse);
@@ -186,7 +185,7 @@ function displayGuardianInstructions() {
 }
 
 function displayGuardiansThoughts(thoughtIndex) {
-  animalThoughtsBox.innerHTML = `<h2> ${thoughtsList.thoughts[thoughtIndex]} </h2>`;
+  bottomLeftBox.innerHTML = `<h2> ${thoughtsList.thoughts[thoughtIndex]} </h2>`;
 }
 
 // adds new secret to the array
@@ -287,7 +286,7 @@ function testGuardianName() {
     let moodText = document.getElementById('moodText');
     let hungerBox = document.getElementById('hungerBox');
     let profileBox = document.getElementById('profileBox');
-    let animalThoughtsBox = document.getElementById('animalThoughtsBox');
+    let animalThoughtsBox = document.getElementById('bottomLeftBox');
     let secretsBox = document.getElementById('secretsBox');
 
     let weatherVar = document.getElementById('rain');
@@ -606,7 +605,6 @@ function testGuardianName() {
     }
   }
 
-
   function secretState() {
     state = `secret`;
     console.log(state);
@@ -615,21 +613,5 @@ function testGuardianName() {
     displaySecret();
     setTimeout(function(){
       document.getElementById(`secretsBox`).style.display= `none`;
-    }, 1000);
+    }, 10000);
   }
-
-
-  // function draw(){
-  //   if (state === `intro`){
-  //     intro();
-  //     // switchToTamagotchi();
-  //   } else if (state=== `tamagotchi`){
-  //     tamagotchi();
-  //     // secretGuardianGenerator();
-  //     // askPassword();
-  //   } else if (state === `secret`){
-  //     secret();
-  //     // secretGuardian();
-  //   }
-  // }
-  //onload end}
