@@ -23,8 +23,6 @@ let nameOfGuardian = `undefined`;
 
 let animalResponse = false;
 let secretData = undefined;
-let hideSecret = false;
-let secretExposed = false;
 let guardianReply = undefined;
 
 // let mood = `undefined`;
@@ -173,10 +171,6 @@ function displayGuardianInstructions() {
     // Q: why animal only plays when mousePressed? and why it has to be in draw cos the music is glitchy
     guardianReply.play();
     animalResponse = false;
-    secretExposed = true;
-    setTimeout(function() {
-      hideSecret = true;
-    }, 3000)
   }
 }
 
@@ -186,9 +180,22 @@ function displayGuardiansThoughts(thoughtIndex) {
 
 // adds new secret to the array
 function tellMeUrSecret() {
+  let secretDate = rememberDate();
   secretData = prompt(`${guardianProfile.name} : Tell me your secret.`);
-  guardianProfile.secret = guardianProfile.secret + "," + secretData;
+  guardianProfile.secret = guardianProfile.secret + `(${secretDate}),`+ secretData;
   localStorage.setItem('guardianData', JSON.stringify(guardianProfile));
+}
+
+function rememberDate(){
+  let date = new Date()
+let day = date.getDate();
+let month = date.getMonth()+1;
+let year = date.getFullYear();
+
+let fullDate = `${day}.${month}.${year}.`;
+return fullDate;
+console.log(fullDate);
+
 }
 
 //activates the intro layout
@@ -233,13 +240,7 @@ function testGuardianName() {
 
   //secrets appear in their zone
   function displaySecret() {
-    if (hideSecret === false) {
-      let date= Date.now();
-      secretsBox.innerHTML += `<h2> ${guardianProfile.secret} , ${date} </h2>`;
-      // hideSecret === true;
-    } else {
-      hideSecret === true;
-    }
+      secretsBox.innerHTML += `<h2> ${guardianProfile.secret} </h2>`;
   }
 
 // tamagotchi state
@@ -601,6 +602,9 @@ function testGuardianName() {
     document.getElementById('secretsBox').style.display = 'block';
 
     displaySecret();
+    setTimeout(function(){
+      document.getElementById(`secretsBox`).style.display= `none`;
+    }, 1000);
   }
 
 

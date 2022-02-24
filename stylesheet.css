@@ -233,11 +233,12 @@ background-color: #000000;
 }
 
 #secretsBox h2{
-  color:#FFFFFF;
+  color:#chaFFFFFF;
 }
 
 #characteristics{
   display: flex;
+  justify-content: center;
 }
 
 .vl {
