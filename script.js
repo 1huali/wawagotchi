@@ -1,4 +1,4 @@
-let name = "koko";
+// let name = "koko";
 let birth = undefined;
 let sign = undefined;
 let pet = undefined;
