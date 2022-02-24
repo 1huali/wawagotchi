@@ -83,10 +83,21 @@ function setup() {
       '*tag': function(tag) {
         console.log(tag)
         if (tag.toLowerCase() === characteristic.name.toLowerCase()){
-          animalResponse === true;
+          // animalResponse === true;
           console.log(`oui?`)
-          // guardianReply.play();
-        }
+          guardianReply.play();
+        }},
+        'hello': function(tag) {
+          if (tag.toLowerCase() === characteristic.name.toLowerCase()){
+            // animalResponse === true;
+            console.log(`oui?`)
+            guardianReply.play();
+          }},
+          'i love you': function(tag) {
+            console.log(tag)
+            if (tag.toLowerCase() === characteristic.name.toLowerCase()){
+              // guardianReply.play();
+            }
       }
     };
     annyang.addCommands(commands);
