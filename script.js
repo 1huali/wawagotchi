@@ -6,6 +6,7 @@ let generatedColor= undefined;
 let generatedOutfit;
 // let outfits = [];
 let moodList= undefined;
+
 //initial state
 let state = `intro`;
 
@@ -26,7 +27,6 @@ let animalResponse = false;
 let secretData = undefined;
 let guardianReply = undefined;
 
-// let mood = `undefined`;
 // let animalEcho = undefined;
 
 let characteristic = {
@@ -64,7 +64,6 @@ moodList = loadJSON(`Moods.json`);
 function setup() {
   //initialization of starting state
   intro();
-  // console.log(state);
   // localStorage.removeItem('guardianData');
 
   if (annyang) {
@@ -76,16 +75,12 @@ function setup() {
       'show': function() {
         secretState();
         document.getElementById('journalBox').style.display = 'block';
-        // console.log(annyang);
         document.getElementById('secretList').style.color = '#000000';
 
       },
-      // Q: want it to turn white
       'hide': function() {
         document.getElementById('secretList').style.color = '#FFFFFF';
         document.getElementById('journalBox').style.display = 'none';
-
-
       },
       '*tag': function(tag) {
         console.log(tag)
@@ -111,7 +106,7 @@ function setup() {
 
 }
 
-
+// sets a guardian random profile for a first visit
 function setGuardianProfile() {
   document.getElementById('introBox').style.display = 'block';
   document.getElementById('returning').style.display = 'none';
@@ -158,7 +153,7 @@ pet.style.filter = `hue-rotate( ${generatedColor}deg)`;
   })
 }
 
-
+// layout on left side
 function displayGuardianInstructions() {
   //   if (passedVerification) {
   console.log(guardianProfile);
@@ -177,11 +172,12 @@ function displayGuardianInstructions() {
 
 }
 
+// layout on the left side
 function displayGuardiansThoughts(thoughtIndex) {
   bottomLeftBox.innerHTML = `<h2> ${thoughtsList.thoughts[thoughtIndex]} </h2>`;
 }
 
-// adds new secret to the array
+// asks to input secrts and stores new secret to the array. Secret count incremente by one.
 function tellMeUrSecret() {
   let secretDate = rememberDate();
   secretData = prompt(`${guardianProfile.name} : Tell me your secret.`);
@@ -192,8 +188,7 @@ function tellMeUrSecret() {
   localStorage.setItem('guardianData', JSON.stringify(guardianProfile));
 }
 
-
-
+// date appears next to the secrets as a journal. Inspired by w3schools
 function rememberDate(){
   let date = new Date()
 let day = date.getDate();
@@ -203,12 +198,11 @@ let year = date.getFullYear();
 let fullDate = `${day}.${month}.${year}.`;
 return fullDate;
 console.log(fullDate);
-
 }
 
 //activates the intro layout
 function intro() {
-  console.log("herer");
+  // dont appear in the intro
   document.getElementById('introBox').style.display = 'none';
   document.getElementById('parentBox').style.display = 'none';
 
@@ -227,10 +221,10 @@ function testGuardianName() {
   document.getElementById('introBox').style.display = 'block';
   document.getElementById('new').style.display = 'none';
 
+//ask for user to input a password
   document.getElementById("dataInputGuardianReturn").addEventListener("click", function() {
       //stop input button from reloading the page
       event.preventDefault();
-
       guardianProfile = JSON.parse(localStorage.getItem(`guardianData`));
 
       let passwordEntry= document.getElementById("inputPasswordReturn").value;
@@ -242,7 +236,7 @@ function testGuardianName() {
       console.log("success");
       }
 
-    }) //anon function
+    }) 
 
   } //testGuardianName
 
@@ -254,6 +248,7 @@ function testGuardianName() {
 
 // tamagotchi state
   function tamagotchi() {
+
     // this remembers the latest number (integer) of secret and stores it in secretCount
     secretCount = parseInt(guardianProfile.numberOfSecrets);
     console.log(secretCount);
@@ -268,14 +263,14 @@ function testGuardianName() {
       displayGuardiansThoughts(randomIndex);
     }, 6000);
 
+    // side boxes layout settings
     document.getElementById('parentBox').style.display = 'block';
     document.getElementById('introBox').style.display = 'none';
     document.getElementById('secretList').style.display = 'none';
 
-
-// variables to store characteristic data
+// variables/data to store in their proper boxes 
     let dt = new Date();
-    // load boxes
+
     let nameBox = document.getElementById('nameBox');
     console.log(nameBox);
     let birthBox = document.getElementById('birthBox');
@@ -293,6 +288,7 @@ function testGuardianName() {
     let journalBox = document.getElementById('journalBox');
     let rightSideBox = document.getElementById('secretsBox');
 
+    // intermittent/variable elements
     let weatherVar = document.getElementById('rain');
     let weatherShowing = false;
 
@@ -309,6 +305,7 @@ function testGuardianName() {
     let petZoneRect = petZone.getBoundingClientRect();
     // requestAnimationFrame(makeNewPosition);
 
+    //BUG : the animal would move but too shacky - enable when fixed. maybe need jquery for a smoother flow.
     function makeNewPosition() {
       // Get viewport dimensions (remove the dimension of the div)
       let h = petZoneRect.height;
@@ -322,8 +319,6 @@ function testGuardianName() {
 
       pet.style.left = Math.min(Math.max(parseInt(newLeft), 25), w - 25) + "px";
       pet.style.top = Math.min(Math.max(parseInt(newTop), 25), h - 200) + "px";
-
-
       requestAnimationFrame(makeNewPosition);
     }
 
@@ -333,6 +328,7 @@ function testGuardianName() {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    //button variable setting 
     let playButt = document.getElementById('playButton');
     let eatButton = document.getElementById('eatButton');
     let helloButton = document.getElementById('helloButton');
@@ -348,15 +344,14 @@ function testGuardianName() {
     showerSoundtrack = document.getElementById('showerSoundtrack');
     ilySoundtrack = document.getElementById('ilySoundtrack');
 
-
+    // elements for New Outfit 
     let outfits = [];
     currentFit = 0;
     outfits[0] = "Preloads/Images/cat_red-peach.gif";
     outfits[1] = "Preloads/Images/cat_lucky-black.gif";
     outfits[2] = "Preloads/Images/cat_snow-silver.gif";
 
-
-
+    // elements for Rooms
     room = document.getElementById('room');
     ramenRoom = document.getElementById('dinnerBackground');
     let rooms = [];
@@ -366,14 +361,13 @@ function testGuardianName() {
     rooms[2] = "Preloads/Images/https-::anime.desktopnexus.com:wallpaper:1519445:.webp"
     rooms[3] = "Preloads/Images/https-::wallpaperaccess.com:saturne.jpeg"
 
-
+    // Characteristic boxes
     nameBox.innerHTML = `<h2> NAME: ${characteristic.name} </h2>`;
     birthBox.innerHTML = `<h2> DAY AND TIME: ${dt.toLocaleString()} </h2>`;
     signBox.innerHTML = `<h2> ELEMENT: ${characteristic.element} </h2>`;
     coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
     moodText.innerHTML = `MOOD: `;
     hungerText.innerHTML = `BELLY: `;
-
 
     // why creating hearts here and at line 103?
     for (let i = 0; i < moodLevel; i++) {
@@ -389,7 +383,6 @@ function testGuardianName() {
     }
 
 
-    // functions
     // animal change outfit
     changeFitButton.addEventListener("click", changeFit);
 
@@ -403,7 +396,7 @@ function testGuardianName() {
       }
     }
 
-    // intermittent rain
+    // intermittent element appearing in animal box
     setInterval(weatherChanging, 3000);
 
     function weatherChanging() {
@@ -414,7 +407,7 @@ function testGuardianName() {
     }
     console.log("weather changing");
 
-    // eat and hunger
+    // eat and hunger : hunger point lost every 20 seconds
     setInterval(hungerUpdate, 20000);
 
     function hungerUpdate() {
@@ -432,14 +425,15 @@ function testGuardianName() {
       }
     }
 
+    // to feed animal, click on Eat HTMLbutton and adds up 4hunger points and takes away 5 coins
     eatButton.addEventListener("click", eatPressed);
-
     function eatPressed() {
       setTimeout(function() {
         room.src = "Preloads/Images/https-::imgur.com:gallery:OI5Ev4n.gif"
         setTimeout(returnToBackground, 3000)
       })
 
+      // so that current room image comes back after going to a room
       function returnToBackground() {
         room.src = rooms[currentRoom]
       }
@@ -472,10 +466,9 @@ function testGuardianName() {
         moodLevel = 1;
       }
 
-      console.log(moodLevel);
       moodText.innerHTML = `MOOD: `;
 
-      // console.log(moodUpdate);
+      // mood hearts incrementing with user interaction/decreasing with time
       document.getElementById('lilhearts').innerHTML = "";
       for (let i = 0; i < moodLevel; i++) {
         let heart = document.createElement("img");
@@ -484,8 +477,10 @@ function testGuardianName() {
       }
     }
 
+    //Play button
     playButt.addEventListener("click", playPressed);
 
+    //play room image appears
     function playPressed() {
       ilySoundtrack.play();
       setTimeout(function() {
@@ -521,8 +516,9 @@ function testGuardianName() {
       }
 
     }
-    // meditative kitty
+    // meditative button
     meditationButton.addEventListener("click", meditationPressed);
+
 
     function meditationPressed() {
       setTimeout(function() {
@@ -551,7 +547,7 @@ function testGuardianName() {
 
 
     setInterval(coinsUpdate, 10000);
-
+// coins increases by 1 every 10 seconds
     function coinsUpdate() {
       coins += 1;
       if (coins < 1) {
@@ -560,9 +556,7 @@ function testGuardianName() {
       coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
     }
 
-
-
-    // plays hello
+    // plays 'hello"
     helloButton.addEventListener("click", playHelloSound);
 
     function playHelloSound() {
@@ -572,11 +566,9 @@ function testGuardianName() {
     }
 
     // displays shower room at shower
-
-    // doesnt come back to normal after 2 seconds
-    // let showerTimer = setTimeout(displayShower, 5000);
     washButton.addEventListener("click", displayShower);
 
+    // shower room displays when Shower button is pressed
     function displayShower() {
       setTimeout(function() {
         showerSoundtrack.play();
@@ -585,12 +577,11 @@ function testGuardianName() {
         setTimeout(returnToBackground, 3000)
       })
     }
-
+// returns to a background
     function returnToBackground() {
       console.log("back");
       room.src = rooms[currentRoom]
     }
-
 
     // displays bg room
     changeBgButton.addEventListener("click", changeBgPicture);
@@ -600,7 +591,6 @@ function testGuardianName() {
       if (currentRoom >= rooms.length - 1) {
         currentRoom = 0;
         room.src = rooms[currentRoom]
-
       } else {
         currentRoom = currentRoom + 1;
         room.src = rooms[currentRoom]
@@ -609,17 +599,10 @@ function testGuardianName() {
     }
   }
 
+  // secret state, secrets can display
   function secretState() {
     state = `secret`;
     console.log(state);
     document.getElementById('secretList').style.display = 'block';
-
-    //Q : list stays black in 20 seconds
     displaySecret();
-    // setTimeout(function(){
-    //   document.getElementById(`secretsBox`).style.color= `#FFFFFF`;
-    // }, 10000);
-
-  
-        // document.getElementById(`secretsBox`).style.color= `#FFFFFF`;
   }
