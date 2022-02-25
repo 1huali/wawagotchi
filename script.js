@@ -1,3 +1,4 @@
+let name = undefined;
 let birth = undefined;
 let sign = undefined;
 let pet = undefined;
@@ -135,7 +136,6 @@ pet.style.filter = `hue-rotate( ${generatedColor}deg)`;
     characteristic.type = random(animal.Type);
     characteristic.form = animalForm;
     characteristic.nature = random(animalFeature.Nature);
-    console.log(animalFeature.Nature);
     characteristic.texture = random(animalFeature.Texture);
     characteristic.element = random(animal.Element);
     characteristic.numberOfSecrets = secretCount;
