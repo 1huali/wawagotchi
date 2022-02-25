@@ -9,6 +9,7 @@ let moodList= undefined;
 //initial state
 let state = `intro`;
 
+let secretCount = 0;
 //json files storage variables
 // let animalData = `undefined`;
 // let colorData = `undefined`;
@@ -64,7 +65,7 @@ function setup() {
   //initialization of starting state
   intro();
   // console.log(state);
-  localStorage.removeItem('guardianData');
+  // localStorage.removeItem('guardianData');
 
   if (annyang) {
     let commands = {
@@ -76,11 +77,14 @@ function setup() {
         secretState();
         document.getElementById('journalBox').style.display = 'block';
         // console.log(annyang);
+        document.getElementById('secretList').style.color = '#000000';
+
       },
       // Q: want it to turn white
       'hide': function() {
-        document.getElementById('secretsBox').style.color = '#000000';
-        document.getElementById('journalBox').style.display = 'block';
+        document.getElementById('secretList').style.color = '#FFFFFF';
+        document.getElementById('journalBox').style.display = 'none';
+
 
       },
       '*tag': function(tag) {
@@ -139,6 +143,7 @@ pet.style.filter = `hue-rotate( ${generatedColor}deg)`;
     console.log(animalFeature.Nature);
     characteristic.texture = random(animalFeature.Texture);
     characteristic.element = random(animal.Element);
+    characteristic.numberOfSecrets = secretCount;
     characteristic.color = generatedColor;
     // characteristic.outfit = generatedOutfit;
     characteristic.secret = "";
@@ -167,6 +172,8 @@ function displayGuardianInstructions() {
   profileBox.innerHTML += ``;
   profileBox.innerHTML += `<h2>${guardianProfile.name}'s box *꧂</h2>`;
   profileBox.innerHTML += `<h2> Mood of the day : ${guardianProfile.mood}</h2>`;
+  profileBox.innerHTML += `<h2>♥  ♥           ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ </h2>`;
+
 
 }
 
@@ -178,9 +185,14 @@ function displayGuardiansThoughts(thoughtIndex) {
 function tellMeUrSecret() {
   let secretDate = rememberDate();
   secretData = prompt(`${guardianProfile.name} : Tell me your secret.`);
-  guardianProfile.secret = guardianProfile.secret + `(${secretDate}),`+ secretData;
+  guardianProfile.secret = guardianProfile.secret + `(${secretDate}) : `+ secretData;
+  secretCount += 1;
+  guardianProfile.numberOfSecrets= secretCount;
+  console.log (secretCount);
   localStorage.setItem('guardianData', JSON.stringify(guardianProfile));
 }
+
+
 
 function rememberDate(){
   let date = new Date()
@@ -236,11 +248,15 @@ function testGuardianName() {
 
   //secrets appear in their zone
   function displaySecret() {
-      secretsBox.innerHTML += `<h2> ${guardianProfile.secret} </h2>`;
-  }
+     document.getElementById("secretList").innerHTML = `<h2> ${guardianProfile.secret} </h2>`;
+     document.getElementById("secretsBox").innerHTML = `<h2> ${secretCount} </h2>`;
+    }
 
 // tamagotchi state
   function tamagotchi() {
+    // this remembers the latest number (integer) of secret and stores it in secretCount
+    secretCount = parseInt(guardianProfile.numberOfSecrets);
+    console.log(secretCount);
     displayGuardianInstructions();
     state = `tamagotchi`;
 
@@ -254,7 +270,7 @@ function testGuardianName() {
 
     document.getElementById('parentBox').style.display = 'block';
     document.getElementById('introBox').style.display = 'none';
-    document.getElementById('secretsBox').style.display = 'none';
+    document.getElementById('secretList').style.display = 'none';
 
 
 // variables to store characteristic data
@@ -273,8 +289,9 @@ function testGuardianName() {
     let hungerBox = document.getElementById('hungerBox');
     let profileBox = document.getElementById('profileBox');
     let animalThoughtsBox = document.getElementById('bottomLeftBox');
-    let secretsBox = document.getElementById('secretsBox');
+    let secretsBox = document.getElementById('secretList');
     let journalBox = document.getElementById('journalBox');
+    let rightSideBox = document.getElementById('secretsBox');
 
     let weatherVar = document.getElementById('rain');
     let weatherShowing = false;
@@ -595,7 +612,7 @@ function testGuardianName() {
   function secretState() {
     state = `secret`;
     console.log(state);
-    document.getElementById('secretsBox').style.display = 'block';
+    document.getElementById('secretList').style.display = 'block';
 
     //Q : list stays black in 20 seconds
     displaySecret();
