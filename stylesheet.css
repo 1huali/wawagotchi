@@ -7,7 +7,7 @@ body {
 }
 .center {
   text-align: center;
-  background: red;
+  background: white;
   margin: auto;
 width: 60%;
   /* justify-content: space-around; */
@@ -71,7 +71,8 @@ h2 {
 
 #journalBox {
   width: :95%;
-  background: rgb(245, 244, 188);
+  background: white;
+  /*   background: rgb(245, 244, 188);  */
   position: : relative;
   margin-left: 0%;
   padding-top: : 5px;
@@ -192,7 +193,7 @@ h2 {
 }
 
 #introBox{
-  background: rgba(245, 244, 188);
+  background: rgb(255, 255, 255);
   margin:1%;
   height:100vh;
   width:100vw;
@@ -210,30 +211,30 @@ h2 {
 }
 #infoBox{
 margin-left: 30px;
-background-color: #000000;
+background-color: #ffffff;
 /* color:#FFFFFF; */
   width:40%;
 }
 #infoBox h2{
-  color:#FFFFFF;
+  color:#000000;
 }
 
 #bottomLeftBox h2{
-  color:#FFFFFF;
+  color:#000000;
 }
 
 #rightSideBox{
   margin-right: 30px;
-  background-color: #000000;
-  color:#FFFFFF;
+  background-color: #ffffff;
+  color:#000000;
     width:40%;
 }
 #rightSideBox h2{
-  color:#FFFFFF;
+  color:#000000;
 }
 
 #secretsBox h2{
-  color:#chaFFFFFF;
+  color:#000000;
 }
 
 #characteristics{

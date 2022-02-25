@@ -15,6 +15,7 @@ let state = `intro`;
 let animalColor = `undefined`;
 let characteristicData = `undefined`;
 let thoughtsList= `undefined`;
+let journalBox=`undefined`;
 
 let animal = `undefined`;
 let nameOfGuardian = `undefined`;
@@ -63,7 +64,7 @@ function setup() {
   //initialization of starting state
   intro();
   // console.log(state);
-  // localStorage.removeItem('guardianData');
+  localStorage.removeItem('guardianData');
 
   if (annyang) {
     let commands = {
@@ -73,16 +74,18 @@ function setup() {
       },
       'show': function() {
         secretState();
+        document.getElementById('journalBox').style.display = 'block';
         // console.log(annyang);
       },
+      // Q: want it to turn white
       'hide': function() {
-        document.getElementById('secretsBox').style.display = 'none';
-        // console.log(annyang);
+        document.getElementById('secretsBox').style.color = '#000000';
+        document.getElementById('journalBox').style.display = 'block';
+
       },
       '*tag': function(tag) {
         console.log(tag)
         if (tag.toLowerCase() === characteristic.name.toLowerCase()){
-          // animalResponse === true;
           console.log(`oui?`)
           guardianReply.play();
         }},
@@ -91,12 +94,11 @@ function setup() {
             console.log(`oui?`)
             guardianReply.play();
           },
-      //     'i love you': function(tag) {
-      //       console.log(tag)
-      //       if (tag.toLowerCase() === characteristic.name.toLowerCase()){
-      //         // guardianReply.play();
-      //       }
-      // }
+          'I love you': function() {
+            console.log('me2')
+              guardianReply.play();
+
+      }
     };
     annyang.addCommands(commands);
     annyang.start();
@@ -147,41 +149,25 @@ pet.style.filter = `hue-rotate( ${generatedColor}deg)`;
     console.log(guardianProfile);
 
     //call the tamagotchi state;
-    // dailyMood();
    tamagotchi();
   })
 }
-//
-// function dailyMood(){
-//   //mood doesnt show
-//   characteristic.mood= random(moodList.moods);
-//   console.log(characteristic.mood);
-// }
 
 
 function displayGuardianInstructions() {
   //   if (passedVerification) {
   console.log(guardianProfile);
-  profileBox.innerHTML = `<h2>Hi, here is the guardian keeper of your secrets.</h2>`;
-  // profileBox.innerHTML += `<h2> Name: ${guardianProfile.name} </h2>`;
+    profileBox.innerHTML += ``;
+  profileBox.innerHTML = `<h2>Hi, I is the guardian keeper of your secrets. I am here to watch over your secrets while you is away</h2>`;
+  profileBox.innerHTML += `<h2>♥  ♥           ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ </h2>`;
   profileBox.innerHTML += `<h2> Metaphysical form : ${guardianProfile.animal}</h2>`;
   profileBox.innerHTML += `<h2> Type : ${guardianProfile.type}</h2>`;
   profileBox.innerHTML += `<h2> Nature : ${guardianProfile.nature}</h2>`;
-  // profileBox.innerHTML += `<h2> Element: ${guardianProfile.element}</h2>`;
-  // profileBox.innerHTML += `<h2> Color : ${guardianProfile.animalColor.name}</h2>`;
-  profileBox.innerHTML += `infos`;
   profileBox.innerHTML += ``;
-  // profileBox.innerHTML += `<h2> Say you promise and your secrets will be safe with ${guardianProfile.name}. </h2>`;
-  // profileBox.innerHTML += `<h2>${guardianProfile.name}'s box *꧂</h2>`;
+  profileBox.innerHTML += ``;
+  profileBox.innerHTML += `<h2>${guardianProfile.name}'s box *꧂</h2>`;
   profileBox.innerHTML += `<h2> Mood of the day : ${guardianProfile.mood}</h2>`;
 
-  //
-  if (animalResponse === true) {
-    console.log(animalResponse);
-    // Q: why animal only plays when mousePressed? and why it has to be in draw cos the music is glitchy
-    guardianReply.play();
-    animalResponse = false;
-  }
 }
 
 function displayGuardiansThoughts(thoughtIndex) {
@@ -288,6 +274,7 @@ function testGuardianName() {
     let profileBox = document.getElementById('profileBox');
     let animalThoughtsBox = document.getElementById('bottomLeftBox');
     let secretsBox = document.getElementById('secretsBox');
+    let journalBox = document.getElementById('journalBox');
 
     let weatherVar = document.getElementById('rain');
     let weatherShowing = false;
@@ -610,8 +597,12 @@ function testGuardianName() {
     console.log(state);
     document.getElementById('secretsBox').style.display = 'block';
 
+    //Q : list stays black in 20 seconds
     displaySecret();
-    setTimeout(function(){
-      document.getElementById(`secretsBox`).style.display= `none`;
-    }, 10000);
+    // setTimeout(function(){
+    //   document.getElementById(`secretsBox`).style.color= `#FFFFFF`;
+    // }, 10000);
+
+  
+        // document.getElementById(`secretsBox`).style.color= `#FFFFFF`;
   }
