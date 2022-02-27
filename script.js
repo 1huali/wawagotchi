@@ -209,8 +209,10 @@ function intro() {
   //set the guardian or generates one
   if (localStorage.getItem(`guardianData`) === null) {
     setGuardianProfile();
+    console.log("if")
     //passedVerification = true;
   } else {
+    console.log("else")
     testGuardianName();
   }
 }
@@ -362,9 +364,9 @@ function testGuardianName() {
     rooms[3] = "Preloads/Images/https-::wallpaperaccess.com:saturne.jpeg"
 
     // Characteristic boxes
-    nameBox.innerHTML = `<h2> NAME: ${characteristic.name} </h2>`;
+    nameBox.innerHTML = `<h2> NAME: ${guardianProfile.name} </h2>`;
     birthBox.innerHTML = `<h2> DAY AND TIME: ${dt.toLocaleString()} </h2>`;
-    signBox.innerHTML = `<h2> ELEMENT: ${characteristic.element} </h2>`;
+    signBox.innerHTML = `<h2> ELEMENT: ${guardianProfile.element} </h2>`;
     coinsBox.innerHTML = `<h2> COINS: ${coins}</h2>`;
     moodText.innerHTML = `MOOD: `;
     hungerText.innerHTML = `BELLY: `;
